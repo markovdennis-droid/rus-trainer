@@ -76,10 +76,10 @@ aside{position:sticky;top:72px;align-self:start}
 .total span{display:block;font-size:12px;color:var(--muted)}
 
 details.p1{border:1px solid var(--line);border-radius:14px;padding:14px 16px;margin-bottom:20px;background:#fbfcfe}
-details.p1 summary{cursor:pointer;font-weight:700;list-style:none}
-details.p1 summary::-webkit-details-marker{display:none}
-details.p1 summary::after{content:"развернуть";float:right;color:var(--blue);font-weight:600;font-size:13px}
-details.p1[open] summary::after{content:"свернуть"}
+details.p1>summary{cursor:pointer;font-weight:700;list-style:none}
+details.p1>summary::-webkit-details-marker{display:none}
+details.p1>summary::after{content:"развернуть";float:right;color:var(--blue);font-weight:600;font-size:13px}
+details.p1[open]>summary::after{content:"свернуть"}
 table.ans{width:100%;border-collapse:collapse;font-size:13.5px;margin-top:12px}
 table.ans th{text-align:left;font-size:11px;text-transform:uppercase;letter-spacing:.05em;color:var(--muted);padding:6px 4px;border-bottom:2px solid var(--line)}
 table.ans td{padding:6px 4px;border-bottom:1px solid var(--line)}
@@ -164,6 +164,43 @@ table.ans td.no{color:var(--red);font-weight:700}
   :root:not([data-theme="light"]) .seg.k-warn{background:#4a3817}
   :root:not([data-theme="light"]) .seg.t-mark{background:#4d2422}
 }
+
+/* Полные задания и ответы ученика */
+.learning-summary{background:var(--blue-soft);border-radius:10px;padding:12px;margin-top:12px;font-size:13px}
+.learning-summary p{margin:6px 0}
+.learning-summary ul{margin:8px 0;padding-left:20px}
+
+.task-review{margin-top:12px;border:1px solid var(--line);border-radius:12px;overflow:hidden;background:var(--card)}
+.task-review>summary{display:flex;align-items:center;gap:12px;padding:12px;list-style:none;cursor:pointer;font-size:14px}
+.task-review>summary::-webkit-details-marker{display:none}
+.task-review>summary::before{content:"▸";color:var(--blue)}
+.task-review[open]>summary::before{content:"▾"}
+.task-review .task-title{flex:1;min-width:0}
+.task-review .task-title small{display:block;font-weight:400;color:var(--muted);font-size:12px;margin-top:2px}
+.task-review .task-status{font-size:11px;font-weight:700;white-space:nowrap;color:var(--muted)}
+.task-review .task-status.correct{color:var(--green)}
+.task-review .task-status.incorrect{color:var(--red)}
+.task-review .task-status.partial{color:var(--orange)}
+.task-review-body{padding:0 14px 16px;border-top:1px solid var(--line);overflow-wrap:anywhere}
+.task-review-body h4{font-size:13px;margin:16px 0 6px}
+.task-review-body p{font-size:14px;margin:8px 0}
+.task-options{padding-left:24px;font-size:14px;margin:8px 0}
+.task-options li{padding:3px 0}
+.task-source{background:var(--blue-soft);padding:12px;border-radius:10px;font-family:Georgia,serif;font-size:14px;line-height:1.8;margin-top:12px}
+.task-source strong{display:block;font-family:inherit;margin-bottom:7px;font-size:13px}
+.answer-comparison{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:14px}
+.answer-comparison>div{border:1px solid var(--line);border-radius:10px;padding:10px;font-size:14px}
+.answer-comparison small{display:block;color:var(--muted);font-size:11px;margin-bottom:4px}
+.answer-comparison b{overflow-wrap:anywhere}
+.task-explanation{background:var(--green-soft);border-radius:10px;padding:10px 12px;margin-top:12px;font-size:13px}
+.review-scroll{max-width:100%;overflow-x:auto}
+.review-table{width:100%;border-collapse:collapse;font-size:12.5px;margin-top:8px}
+.review-table th,.review-table td{text-align:left;vertical-align:top;padding:7px;border-bottom:1px solid var(--line)}
+.review-table th{color:var(--muted);font-size:11px}
+.practice-wrong{color:var(--red);font-weight:700}
+.practice-right{color:var(--green)}
+@media(max-width:500px){.task-review>summary{flex-wrap:wrap}.task-review .task-title{flex-basis:75%}.answer-comparison{grid-template-columns:1fr}}
+
 </style>
 </head>
 <body>
@@ -191,6 +228,7 @@ table.ans td.no{color:var(--red);font-weight:700}
 
 <div class="toast" id="toast"></div>
 
+<script src="tasks.js"></script>
 <script>
 /* ===================== данные ===================== */
 const DEMO_ESSAY = "Автор считает, что умение ждать — это не пустая трата времени, а условие осмысленного поступка. Эта мысль раскрывается в тексте постепенно. Сначала автор вспоминает письмо, которое шло неделю, и наше сегодняшнее раздражение от задержки в одну секунду. Этот пример показывает, насколько сместились наши представления о норме. Затем автор говорит о том, что за ту же неделю человек успевал передумать и найти верные слова. Оба примера связаны противопоставлением: раньше пауза работала на человека, сегодня её нет вовсе. Я согласен с автором. В переписке я не раз отправлял резкий ответ и жалел об этом уже через минуту, тогда как отложенный до утра разговор почти всегда проходил спокойнее. Пауза нужна не для того, чтобы оттянуть ответ, а чтобы ответ стал обдуманным. Поэтому умение ждать сегодня дороже, чем скорость. Например, перед важным разговором полезно записать свои мысли и перечитать их позже. Тогда становится проще отличить обиду от разумного требования и выбрать слова, которые не унизят собеседника. Такое ожидание помогает сохранить отношения и найти решение, устраивающее обе стороны. Оно требует выдержки, но приносит больше пользы, чем поспешная реакция.";
@@ -276,7 +314,8 @@ function intake(){
     WORKS.unshift({
       id:w.id||"in"+Date.now(),name:w.student||"Ученик",group:"демо-передача из тренажёра",
       variant:w.variant||"Вариант",date:"только что",status:"wait",
-      p1:(w.part1||[]).map(r=>({no:r.no,t:r.topic,max:r.max,answer:r.answer,key:r.key,score:r.score})),
+      p1:(w.part1||[]).map(r=>({no:r.no,t:r.topic,max:r.max,answer:r.answer,key:r.key,score:r.score,task:r.task||null,practice:r.practice||null})),
+      source:w.source||null,essayTask:w.essayTask||null,bankVersion:w.bankVersion||null,
       essay:w.essay||null,problem:w.problem||null,
       marks:w.marks?{items:w.marks.items,scores:w.marks.scores}:null,
       teacher:{},notes:[]
@@ -351,6 +390,95 @@ function renderList(){
   renderSidebar();
 }
 
+/* Полные условия для разбора части 1 */
+function isOriginalDemo(w){return w.bankVersion===TASK_BANK_VERSION||String(w.variant||"").startsWith("Демо-вариант 1");}
+function reviewTask(w,r){return r.task||(isOriginalDemo(w)?TASKS.find(t=>t.no===r.no):null);}
+function reviewSource(w){return w.source||(isOriginalDemo(w)?TEXT:null);}
+function sourceHTML(source){
+  if(!source||!Array.isArray(source.sentences))return '<p class="hintline">Исходный текст не передан вместе с работой.</p>';
+  return '<div class="task-source"><strong>'+esc(source.title||"Исходный текст")+'</strong>'+source.sentences.map((text,i)=>'('+ (i+1) +') '+esc(text)).join(' ')+'</div>';
+}
+function normalizedReview(v){return String(v||"").toLowerCase().replace(/ё/g,"е").replace(/[^a-zа-я0-9]/g,"");}
+function renderPractice(task,practice,statsOnly=false){
+  if(!task.drill||!practice||!Object.keys(practice).length)return statsOnly?null:'';
+  let rows='',errors=0,positions=0;
+  if(task.drill.kind==='letters'){
+    task.drill.rows.forEach((row,ri)=>{
+      row.forEach((word,wi)=>{
+        const value=String(practice[ri+'-'+wi]||'');
+        const ok=normalizedReview(value)===normalizedReview(word[1]);errors+=ok?0:1;positions++;
+        rows+='<tr><td>'+ (ri+1) +'</td><td class="'+(ok?'practice-right':'practice-wrong')+'">'+esc(word[0])+'<b>'+esc(value||'…')+'</b>'+esc(word[2])+'</td><td>'+esc(word.join(''))+'</td></tr>';
+      });
+    });
+  }else if(task.drill.kind==='commas'){
+    task.drill.sentences.forEach((sentence,si)=>{
+      const actual=[],correct=[];
+      sentence.words.forEach((word,wi)=>{
+        const isGap=wi<sentence.words.length-1,put=isGap&&!!practice[si+'-'+wi],need=isGap&&sentence.commas.includes(wi);
+        if(isGap){positions++;if(put!==need)errors++;}
+        actual.push(esc(word)+(put?'<span class="'+(need?'practice-right':'practice-wrong')+'">,</span>':''));
+        correct.push(esc(word)+(need?',':''));
+      });
+      rows+='<tr><td>'+ (si+1) +'</td><td>'+actual.join(' ')+'</td><td>'+correct.join(' ')+'</td></tr>';
+    });
+  }else{return statsOnly?null:'';}
+  if(statsOnly)return {errors,positions};
+  return '<h4>Как ученик выполнял тренировку</h4><p>Ошибок в позициях: <b>'+errors+'</b> из '+positions+'.</p><div class="review-scroll"><table class="review-table"><tr><th>Ряд</th><th>Ответ ученика</th><th>Правильно</th></tr>'+rows+'</table></div><p class="hintline">Тренировочные позиции показаны отдельно от ответа в экзаменационном бланке.</p>';
+}
+function renderTaskReview(w,r){
+  const task=reviewTask(w,r),answer=String(r.answer||''),hasPractice=!!r.practice&&Object.keys(r.practice).length>0;
+  const status=!answer.trim()?(hasPractice?'Есть тренировка':'Не отвечено'):(r.score===r.max?'Верно':(r.score>0?'Частично':'Ошибка'));
+  const cls=!answer.trim()?'':(r.score===r.max?'correct':(r.score>0?'partial':'incorrect'));
+  let h='<details class="task-review" data-task-no="'+r.no+'"><summary><span class="task-title">Задание №'+r.no+'<small>'+esc(r.t||r.topic||'')+'</small></span><span class="task-status '+cls+'">'+status+' · '+r.score+'/'+r.max+'</span></summary><div class="task-review-body">';
+  if(task){
+    if(task.useText)h+=sourceHTML(reviewSource(w));
+    h+='<h4>Условие</h4><p>'+esc(task.stem||'')+'</p>';
+    if(Array.isArray(task.opts))h+='<ol class="task-options">'+task.opts.map(text=>'<li>'+esc(text)+'</li>').join('')+'</ol>';
+    if(Array.isArray(task.left)){
+      h+='<div class="review-scroll"><table class="review-table"><tr><th>Позиция</th><th>Что сопоставить</th></tr>'+task.left.map(row=>'<tr><td><b>'+esc(row[0])+'</b></td><td>'+esc(row[1])+'</td></tr>').join('')+'</table></div>';
+      if(Array.isArray(task.right))h+='<ol class="task-options">'+task.right.map(text=>'<li>'+esc(text)+'</li>').join('')+'</ol>';
+    }
+  }else{
+    h+='<p class="hintline">Полное условие этого задания не сохранено в старой работе. Новые отправленные работы содержат условия и объяснения.</p>';
+  }
+  h+='<div class="answer-comparison"><div><small>Ответ ученика в бланке</small><b>'+esc(answer||'Не отвечено')+'</b></div><div><small>Правильный ответ</small><b>'+esc(r.key||'—')+'</b></div></div>';
+  if(task&&Array.isArray(task.left)){
+    const actual=normalizedReview(answer),key=normalizedReview(r.key);
+    h+='<h4>Сопоставление по позициям</h4><div class="review-scroll"><table class="review-table"><tr><th>Позиция</th><th>Ученик</th><th>Правильно</th></tr>'+task.left.map((row,i)=>'<tr><td>'+esc(row[0])+'</td><td class="'+(actual[i]===key[i]?'practice-right':'practice-wrong')+'">'+esc(actual[i]||'—')+'</td><td>'+esc(key[i]||'—')+'</td></tr>').join('')+'</table></div>';
+  }
+  if(task&&task.exp)h+='<div class="task-explanation"><b>Объяснение</b><br>'+esc(task.exp)+'</div>';
+  if(task)h+=renderPractice(task,r.practice);
+  return h+'</div></details>';
+}
+function renderLearningSummary(w){
+  const rows=w.p1||[],answered=rows.filter(r=>String(r.answer||'').trim());
+  const correct=answered.filter(r=>r.score===r.max).length;
+  const partial=answered.filter(r=>r.score>0&&r.score<r.max).length;
+  const wrong=answered.filter(r=>r.score===0).length;
+  const topics=[];
+  rows.forEach(r=>{
+    const task=reviewTask(w,r),stats=task?renderPractice(task,r.practice,true):null;
+    if((String(r.answer||'').trim()&&r.score<r.max)||(stats&&stats.errors>0))topics.push(r);
+  });
+  let h='<div class="learning-summary"><b>Темы для разбора с учеником</b><p>Ответы в бланке: верно '+correct+', частично '+partial+', с ошибками '+wrong+', не заполнено '+(rows.length-answered.length)+'.</p>';
+  if(topics.length)h+='<ul>'+topics.map(r=>'<li>№'+r.no+' — '+esc(r.t||r.topic||'')+'</li>').join('')+'</ul><p class="hintline">Откройте эти задания ниже и разберите причину ошибки. Это результаты только выбранной работы.</p>';
+  else h+='<p class="hintline">'+(answered.length?'В заполненных ответах ошибок нет. Пропущенные задания стоит выполнить отдельно.':'Ответы в бланке не заполнены. По пропускам нельзя определить слабые темы; тренировочные позиции можно посмотреть внутри заданий.')+'</p>';
+  return h+'</div>';
+}
+function renderPart1(w){
+  const rows=w.p1||[],notFull=rows.filter(r=>r.score<r.max).length;
+  let h='<details class="p1" open><summary>Задания 1–26 — проверено автоматически: '+p1Score(w)+' из '+p1Max(w)+(notFull?' · без полного балла: '+notFull:' · без ошибок')+'</summary>';
+  h+='<p class="hintline">Откройте нужный номер: внутри условие, варианты, ответ ученика, правильный ответ и объяснение. Показаны задания, переданные с этой работой.</p>';
+  h+=renderLearningSummary(w);
+  h+=rows.map(r=>renderTaskReview(w,r)).join('');
+  return h+'</details>';
+}
+function renderEssayPrompt(w){
+  const task=w.essayTask||(isOriginalDemo(w)?TASKS.find(t=>t.no===27):null);
+  if(!task)return '';
+  return '<details class="task-review" style="margin:0 0 14px"><summary><span class="task-title">Исходный текст и условие задания №27</span></summary><div class="task-review-body">'+sourceHTML(reviewSource(w))+'<h4>Условие</h4><p>'+esc(task.stem||'')+'</p></div></details>';
+}
+
 /* ===================== карточка работы ===================== */
 function openWork(id){
   open=WORKS.find(w=>w.id===id);
@@ -365,25 +493,17 @@ function renderWork(){
   h+='<div class="wtop"><div><h2>'+esc(w.name)+'</h2><div class="meta">'+esc(w.variant)+' · '+esc(w.date)+'</div></div>';
   h+='<div class="total"><b>'+totalScore(w)+' / '+max+'</b><span>первичных баллов</span></div></div>';
 
-  /* часть 1 */
-  const wrong=(w.p1||[]).filter(r=>r.score<r.max);
-  h+='<details class="p1"><summary>Часть 1 — проверено автоматически: '+p1Score(w)+' из '+p1Max(w)+
-     (wrong.length?' · ошибок: '+wrong.length:' · без ошибок')+'</summary>';
-  h+='<table class="ans"><tr><th>№</th><th>Что проверялось</th><th>Ответ ученика</th><th>Эталон</th><th>Балл</th></tr>';
-  (w.p1||[]).forEach(r=>{
-    const ok=r.score===r.max;
-    h+='<tr><td><b>'+r.no+'</b></td><td>'+esc(r.t)+'</td><td class="k">'+esc(r.answer||"—")+'</td>'+
-       '<td class="k" style="color:var(--muted)">'+esc(r.key)+'</td><td class="'+(ok?"ok":"no")+'">'+r.score+'/'+r.max+'</td></tr>';
-  });
-  h+='</table></details>';
+  /* часть 1: видны результаты, внутри каждого номера — полное условие */
+  h+=renderPart1(w);
 
   if(!w.essay){
-    h+='<div class="empty">В этой работе сочинения нет — проверять нечего.</div></div>';
+    h+='<div class="empty">В этой работе сочинения нет. Задания части 1 можно разобрать выше.</div></div>';
     $("#main").innerHTML=h;$("#back").onclick=renderList;return;
   }
 
   /* часть 2 */
   h+='<div class="grid"><div>';
+  h+=renderEssayPrompt(w);
   h+='<div class="prob"><span>Проблема, заданная в задании 27</span>'+esc(w.problem||"")+'</div>';
   if(shortEssay(w)) h+='<div class="note">Объём меньше 150 слов — 0 по всем критериям сочинения. Замечания репетитора можно добавить для тренировки.</div>';
   h+='<div id="essayBox"></div>';
