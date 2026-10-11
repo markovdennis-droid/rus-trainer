@@ -1,0 +1,530 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Кабинет репетитора · Тренажёр ЕГЭ</title>
+<style>
+:root{
+  --bg:#f3f6fc;--card:#fff;--ink:#17203a;--muted:#687391;--line:#e4e9f4;
+  --blue:#2f6bed;--blue-soft:#e9f0ff;--green:#17a673;--green-soft:#e3f7ef;
+  --orange:#f08a24;--orange-soft:#fff2e2;--red:#e2574c;--red-soft:#fdeceb;
+  --r:18px;--sh:0 2px 4px rgba(23,32,58,.04),0 10px 28px rgba(23,32,58,.07);
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);
+  font:16px/1.55 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif;-webkit-font-smoothing:antialiased}
+button{font:inherit;cursor:pointer;border:0}
+h1,h2,h3{margin:0;letter-spacing:-.02em}
+
+header{position:sticky;top:0;z-index:30;background:rgba(243,246,252,.93);backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+.nav{max-width:1180px;margin:0 auto;padding:12px 20px;display:flex;align-items:center;gap:14px;flex-wrap:wrap}
+.home-link{color:var(--blue);text-decoration:none;font-size:14px;font-weight:600}
+.home-link:hover{text-decoration:underline}
+.logo{display:flex;align-items:center;gap:10px;font-weight:800}
+.cube{width:32px;height:32px;border-radius:11px;background:linear-gradient(150deg,#5b8dff,var(--blue));
+  box-shadow:inset 0 -3px 6px rgba(0,0,0,.16),0 6px 14px rgba(47,107,237,.3);display:grid;place-items:center;color:#fff}
+.who{margin-left:auto;display:flex;align-items:center;gap:10px;font-size:14px;color:var(--muted)}
+.ava{width:32px;height:32px;border-radius:50%;background:linear-gradient(150deg,#45cf9d,var(--green));
+  display:grid;place-items:center;color:#fff;font-weight:700;font-size:13px}
+
+.wrap{max-width:1180px;margin:0 auto;padding:22px 20px 70px;display:grid;grid-template-columns:250px 1fr;gap:20px}
+.wrap>main,.grid>div{min-width:0}
+details.p1{max-width:100%;overflow-x:auto}
+@media(max-width:900px){.wrap{grid-template-columns:1fr;padding:16px 14px 60px}}
+aside{position:sticky;top:72px;align-self:start}
+@media(max-width:900px){aside{position:static}}
+.panel{background:var(--card);border:1px solid var(--line);border-radius:var(--r);box-shadow:var(--sh);padding:16px}
+.panel h3{font-size:12px;text-transform:uppercase;letter-spacing:.06em;color:var(--muted);margin-bottom:12px}
+.stu{display:flex;align-items:center;gap:10px;padding:9px 8px;border-radius:12px;cursor:pointer;font-size:14.5px}
+.stu:hover{background:#f5f8fe}
+.stu.on{background:var(--blue-soft)}
+.stu .ava2{width:30px;height:30px;border-radius:50%;background:#e4e9f4;display:grid;place-items:center;font-size:12px;font-weight:700;color:var(--muted)}
+.stu .nm{flex:1;line-height:1.2}
+.stu .nm small{display:block;color:var(--muted);font-size:11.5px}
+.dot{width:8px;height:8px;border-radius:50%;background:var(--orange)}
+.invite{margin-top:12px;font-size:12.5px;color:var(--muted);line-height:1.5;background:#f7f9fe;border-radius:12px;padding:10px}
+.invite code{font-size:12px;background:#fff;border:1px solid var(--line);border-radius:6px;padding:1px 5px}
+
+.head-row{display:flex;align-items:baseline;gap:12px;margin-bottom:16px;flex-wrap:wrap}
+.head-row h1{font-size:26px;font-weight:800}
+.count{background:var(--orange-soft);color:#9a5410;font-size:13px;font-weight:700;padding:4px 11px;border-radius:999px}
+
+.wcard{background:var(--card);border:1px solid var(--line);border-radius:var(--r);box-shadow:var(--sh);
+  padding:16px 18px;margin-bottom:12px;display:flex;align-items:center;gap:14px;cursor:pointer;flex-wrap:wrap}
+.wcard:hover{border-color:#c9d6f5}
+.wcard .ava2{width:40px;height:40px;border-radius:50%;background:linear-gradient(150deg,#8fb0ff,var(--blue));
+  color:#fff;display:grid;place-items:center;font-weight:700;font-size:14px}
+.wcard .main{flex:1;min-width:180px}
+.wcard .main b{display:block;font-size:16px}
+.wcard .main span{font-size:13px;color:var(--muted)}
+.badge{font-size:12px;font-weight:700;padding:5px 11px;border-radius:999px;white-space:nowrap}
+.badge.wait{background:var(--orange-soft);color:#9a5410}
+.badge.done{background:var(--green-soft);color:var(--green)}
+.badge.part{background:var(--blue-soft);color:var(--blue)}
+.sc{font-weight:800;font-size:18px;font-variant-numeric:tabular-nums;min-width:74px;text-align:right}
+.sc small{display:block;font-size:11px;font-weight:600;color:var(--muted)}
+
+.work{background:var(--card);border:1px solid var(--line);border-radius:var(--r);box-shadow:var(--sh);padding:24px 26px}
+@media(max-width:900px){.work{padding:18px 15px}}
+.back{background:none;color:var(--blue);font-weight:600;font-size:14px;padding:0;margin-bottom:14px}
+.wtop{display:flex;align-items:center;gap:14px;flex-wrap:wrap;padding-bottom:16px;border-bottom:1px solid var(--line);margin-bottom:18px}
+.wtop h2{font-size:22px;font-weight:800}
+.wtop .meta{font-size:13.5px;color:var(--muted)}
+.total{margin-left:auto;text-align:right}
+.total b{font-size:28px;font-weight:800;letter-spacing:-.02em}
+.total span{display:block;font-size:12px;color:var(--muted)}
+
+details.p1{border:1px solid var(--line);border-radius:14px;padding:14px 16px;margin-bottom:20px;background:#fbfcfe}
+details.p1 summary{cursor:pointer;font-weight:700;list-style:none}
+details.p1 summary::-webkit-details-marker{display:none}
+details.p1 summary::after{content:"развернуть";float:right;color:var(--blue);font-weight:600;font-size:13px}
+details.p1[open] summary::after{content:"свернуть"}
+table.ans{width:100%;border-collapse:collapse;font-size:13.5px;margin-top:12px}
+table.ans th{text-align:left;font-size:11px;text-transform:uppercase;letter-spacing:.05em;color:var(--muted);padding:6px 4px;border-bottom:2px solid var(--line)}
+table.ans td{padding:6px 4px;border-bottom:1px solid var(--line)}
+table.ans td.k{font-family:ui-monospace,Menlo,monospace;font-size:13px}
+table.ans td.ok{color:var(--green);font-weight:700}
+table.ans td.no{color:var(--red);font-weight:700}
+
+.grid{display:grid;grid-template-columns:1fr 330px;gap:20px;align-items:start}
+@media(max-width:1000px){.grid{grid-template-columns:1fr}}
+.prob{background:var(--orange-soft);border-radius:12px;padding:12px 14px;font-size:14.5px;margin-bottom:14px}
+.prob span{display:block;font-size:11px;text-transform:uppercase;letter-spacing:.05em;color:#9a5410;margin-bottom:3px}
+#essayBox{border:2px solid var(--line);border-radius:14px;padding:18px;font-family:Georgia,serif;
+  font-size:16.5px;line-height:2.05;background:#fbfcfe;white-space:pre-wrap}
+.seg{border-radius:4px;padding:1px 0}
+.seg.k-ok{background:#d9f3e7;box-shadow:inset 0 -2px 0 var(--green)}
+.seg.k-warn{background:#ffeccf;box-shadow:inset 0 -2px 0 var(--orange)}
+.seg.k-bad{background:#fbdcd9;box-shadow:inset 0 -2px 0 var(--red)}
+.seg.t-mark{background:#ffe9e6;box-shadow:inset 0 -2px 0 var(--red);cursor:pointer}
+.seg.k-ok.t-mark,.seg.k-warn.t-mark{box-shadow:inset 0 -2px 0 var(--red)}
+
+.selbar{display:none;margin-top:12px;background:var(--red-soft);border:1px solid #f6cdc9;border-radius:14px;padding:14px}
+.selbar.show{display:block}
+.selbar .frag{font-family:Georgia,serif;font-style:italic;margin-bottom:10px;font-size:15px}
+.selbar .row{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+.selbar select,.selbar input{border:1px solid var(--line);border-radius:10px;padding:9px 11px;font:inherit;font-size:14px;background:#fff;color:var(--ink)}
+.selbar input{flex:1;min-width:180px}
+.hintline{font-size:12.5px;color:var(--muted);margin-top:10px}
+
+.btn{border-radius:12px;padding:10px 18px;font-weight:700;font-size:14.5px}
+.btn-pri{background:var(--blue);color:#fff;box-shadow:0 5px 14px rgba(47,107,237,.28)}
+.btn-ok{background:var(--green);color:#fff;box-shadow:0 5px 14px rgba(23,166,115,.28)}
+.btn-gh{background:#fff;color:var(--ink);border:1px solid var(--line)}
+.btn-sm{padding:7px 13px;font-size:13px}
+.btn:disabled{opacity:.45;cursor:not-allowed;box-shadow:none}
+
+.crit-row{display:flex;align-items:center;gap:8px;padding:8px 0;border-bottom:1px solid var(--line);font-size:14px}
+.crit-row:last-child{border:0}
+.crit-row .code{font-weight:800;min-width:34px}
+.crit-row .nm{flex:1;color:var(--muted);font-size:12.5px;line-height:1.3}
+.crit-row .pt{font-weight:800;font-variant-numeric:tabular-nums}
+.crit-row.auto .code{color:var(--green)}
+.chead{font-size:11px;text-transform:uppercase;letter-spacing:.06em;color:var(--muted);margin:14px 0 2px}
+.mrow{padding:10px 0;border-bottom:1px solid var(--line)}
+.mrow:last-child{border:0}
+.mrow .lbl{display:flex;justify-content:space-between;font-size:13.5px;margin-bottom:7px}
+.mrow .lbl b{font-weight:800}
+.scale{display:flex;gap:5px}
+.scale button{flex:1;border:1px solid var(--line);background:#fff;border-radius:9px;padding:7px 0;font-size:12.5px;font-weight:700;color:var(--muted)}
+.scale button.on{background:var(--blue);border-color:var(--blue);color:#fff}
+.scale small{display:block;font-size:9.5px;font-weight:600;opacity:.75}
+
+.sum{display:flex;justify-content:space-between;margin-top:14px;padding-top:12px;border-top:2px solid var(--ink);font-weight:800;font-size:17px}
+.note{font-size:12px;color:var(--muted);background:var(--blue-soft);border-radius:10px;padding:10px 12px;margin-top:12px;line-height:1.5}
+.mark-item{display:flex;gap:9px;padding:9px 10px;border-radius:10px;font-size:13.5px;line-height:1.45;cursor:pointer}
+.mark-item:hover{background:#f4f7fd}
+.tag{font-weight:700;font-size:10.5px;padding:2px 7px;border-radius:999px;height:fit-content;white-space:nowrap}
+.tag.ok{background:var(--green-soft);color:var(--green)}
+.tag.warn{background:var(--orange-soft);color:#9a5410}
+.tag.bad{background:var(--red-soft);color:var(--red)}
+.tag.t{background:#ece4fb;color:#6b3fd4}
+.del{margin-left:auto;color:var(--muted);font-size:16px;background:none;padding:0 4px}
+
+.empty{text-align:center;color:var(--muted);padding:40px 20px;font-size:15px}
+.toast{position:fixed;left:50%;bottom:26px;transform:translateX(-50%);background:var(--ink);color:#fff;
+  padding:12px 20px;border-radius:14px;font-size:14.5px;box-shadow:0 10px 30px rgba(0,0,0,.3);display:none;z-index:60}
+.toast.show{display:block}
+
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    --bg:#0f1426;--card:#19203a;--ink:#e9edf8;--muted:#8d99b9;--line:#283151;
+    --blue-soft:#1d2950;--green-soft:#143529;--orange-soft:#392813;--red-soft:#391e1d;
+    --sh:0 2px 4px rgba(0,0,0,.2),0 10px 28px rgba(0,0,0,.3);
+  }
+  :root:not([data-theme="light"]) header{background:rgba(15,20,38,.93)}
+  :root:not([data-theme="light"]) #essayBox,:root:not([data-theme="light"]) details.p1,
+  :root:not([data-theme="light"]) .invite{background:#141a30}
+  :root:not([data-theme="light"]) .btn-gh,:root:not([data-theme="light"]) .scale button,
+  :root:not([data-theme="light"]) .selbar select,:root:not([data-theme="light"]) .selbar input{background:#19203a}
+  :root:not([data-theme="light"]) .scale button.on{background:var(--blue);color:#fff}
+  :root:not([data-theme="light"]) .stu:hover{background:#1d2444}
+  :root:not([data-theme="light"]) .seg.k-ok{background:#1b4a38}
+  :root:not([data-theme="light"]) .seg.k-warn{background:#4a3817}
+  :root:not([data-theme="light"]) .seg.t-mark{background:#4d2422}
+}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="nav">
+    <a class="logo" href="index.html" style="text-decoration:none;color:inherit"><span class="cube">Р</span> Кабинет репетитора</a>
+    <a class="home-link" href="index.html">← На главную</a>
+    <div class="who"><span>Евгения А.</span><span class="ava">ЕА</span></div>
+  </div>
+</header>
+
+<div class="wrap">
+  <aside>
+    <div class="panel">
+      <h3>Ученики</h3>
+      <div id="stuList"></div>
+      <div class="invite">Ссылка-приглашение<br><code>egetraining.com/t/ea-91kf</code><br>
+        Ученик оплачивает 1290 ₽ за год доступа по приглашению. Вам начисляется 300 ₽ с оплаты каждого года доступа ученика; сервису остаётся 990 ₽ до налогов и комиссий. Кабинет репетитора бесплатный. В демо ссылка показана как пример.</div>
+    </div>
+  </aside>
+
+  <main id="main"></main>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+/* ===================== данные ===================== */
+const DEMO_ESSAY = "Автор считает, что умение ждать — это не пустая трата времени, а условие осмысленного поступка. Эта мысль раскрывается в тексте постепенно. Сначала автор вспоминает письмо, которое шло неделю, и наше сегодняшнее раздражение от задержки в одну секунду. Этот пример показывает, насколько сместились наши представления о норме. Затем автор говорит о том, что за ту же неделю человек успевал передумать и найти верные слова. Оба примера связаны противопоставлением: раньше пауза работала на человека, сегодня её нет вовсе. Я согласен с автором. В переписке я не раз отправлял резкий ответ и жалел об этом уже через минуту, тогда как отложенный до утра разговор почти всегда проходил спокойнее. Пауза нужна не для того, чтобы оттянуть ответ, а чтобы ответ стал обдуманным. Поэтому умение ждать сегодня дороже, чем скорость. Например, перед важным разговором полезно записать свои мысли и перечитать их позже. Тогда становится проще отличить обиду от разумного требования и выбрать слова, которые не унизят собеседника. Такое ожидание помогает сохранить отношения и найти решение, устраивающее обе стороны. Оно требует выдержки, но приносит больше пользы, чем поспешная реакция.";
+
+const DEMO_MARKS = {
+  items:[
+    {s:0,crit:"К1",level:"ok",  text:"Позиция автора по заявленной проблеме сформулирована верно."},
+    {s:2,crit:"К2",level:"ok",  text:"Первый пример-иллюстрация взят из исходного текста."},
+    {s:3,crit:"К2",level:"ok",  text:"Пояснение к первому примеру дано."},
+    {s:4,crit:"К2",level:"warn",text:"Второй пример приведён, но пояснения к нему нет — такой пример не засчитывается."},
+    {s:5,crit:"К2",level:"ok",  text:"Смысловая связь между примерами указана: противопоставление."},
+    {s:7,crit:"К3",level:"ok",  text:"Собственное отношение заявлено и обосновано примером-аргументом."}
+  ],
+  scores:{"К1":1,"К2":2,"К3":2,"К4":1,"К5":2,"К6":1}
+};
+
+const P1_DEMO = [
+  {no:1,t:"Самостоятельный подбор слова",max:1,answer:"такие",key:"такие",score:1},
+  {no:2,t:"Лексическое значение слова",max:1,answer:"235",key:"235",score:1},
+  {no:3,t:"Стилистический анализ",max:1,answer:"1234",key:"1234",score:1},
+  {no:4,t:"Ударение",max:1,answer:"125",key:"125",score:1},
+  {no:5,t:"Паронимы",max:1,answer:"эффектным",key:"эффективным",score:0},
+  {no:6,t:"Исключить лишнее слово",max:1,answer:"очень",key:"очень",score:1},
+  {no:7,t:"Форма слова",max:1,answer:"туфель",key:"туфель",score:1},
+  {no:8,t:"Грамматические ошибки",max:2,answer:"13562",key:"13562",score:2},
+  {no:9,t:"Правописание корней",max:1,answer:"45",key:"45",score:1},
+  {no:10,t:"Правописание приставок",max:1,answer:"13",key:"12",score:0},
+  {no:11,t:"Суффиксы",max:1,answer:"34",key:"34",score:1},
+  {no:12,t:"Личные окончания",max:1,answer:"345",key:"345",score:1},
+  {no:13,t:"НЕ и НИ",max:1,answer:"134",key:"134",score:1},
+  {no:14,t:"Слитно-дефисно-раздельно",max:1,answer:"14",key:"14",score:1},
+  {no:15,t:"Н и НН",max:1,answer:"14",key:"14",score:1},
+  {no:16,t:"ССП и однородные члены",max:1,answer:"23",key:"23",score:1},
+  {no:17,t:"Обособленные члены",max:1,answer:"13",key:"123",score:0},
+  {no:18,t:"Вводные слова",max:1,answer:"1234",key:"1234",score:1},
+  {no:19,t:"СПП",max:1,answer:"12345",key:"12345",score:1},
+  {no:20,t:"Разные виды связи",max:1,answer:"124",key:"124",score:1},
+  {no:21,t:"Пунктуационный анализ",max:1,answer:"13",key:"13",score:1},
+  {no:22,t:"Средства выразительности",max:2,answer:"18459",key:"18459",score:2},
+  {no:23,t:"Соответствие содержанию",max:1,answer:"24",key:"24",score:1},
+  {no:24,t:"Типы речи",max:1,answer:"245",key:"245",score:1},
+  {no:25,t:"Лексический анализ",max:1,answer:"суесловие",key:"суесловие",score:1},
+  {no:26,t:"Средства связи предложений",max:1,answer:"6",key:"6",score:1}
+];
+
+const CRIT=[
+  {c:"К1",n:"Отражение позиции автора",max:1,auto:true},
+  {c:"К2",n:"Комментарий к позиции автора",max:3,auto:true},
+  {c:"К3",n:"Своё отношение и обоснование",max:2,auto:true},
+  {c:"К4",n:"Фактическая точность",max:1,auto:true},
+  {c:"К5",n:"Логичность речи",max:2,auto:true},
+  {c:"К6",n:"Этические нормы",max:1,auto:true},
+  {c:"К7",n:"Орфография",max:3,auto:false},
+  {c:"К8",n:"Пунктуация",max:3,auto:false},
+  {c:"К9",n:"Грамматические нормы",max:3,auto:false},
+  {c:"К10",n:"Речевые нормы",max:3,auto:false}
+];
+const SCALE=[{v:3,l:"нет"},{v:2,l:"1–2"},{v:1,l:"3–4"},{v:0,l:"5+"}];
+
+let WORKS=[
+  {id:"w1",name:"Аня Ковалёва",group:"11 класс · вт/чт",variant:"Демо-вариант 1",date:"сегодня, 18:40",
+   status:"wait",p1:P1_DEMO,essay:DEMO_ESSAY,problem:"Почему человеку важно уметь ждать?",
+   marks:null,teacher:{},notes:[]},
+  {id:"w2",name:"Миша Лебедев",group:"11 класс · вт/чт",variant:"Вариант 2",date:"9 октября",
+   status:"done",p1:P1_DEMO.map(r=>({...r,score:r.no%4===0?0:r.score})),essay:DEMO_ESSAY,
+   problem:"Почему человеку важно уметь ждать?",marks:null,
+   teacher:{"К1":1,"К2":1,"К3":2,"К4":1,"К5":1,"К6":1,"К7":2,"К8":1,"К9":3,"К10":2},notes:[]},
+  {id:"w3",name:"Соня Гринь",group:"10 класс",variant:"Тренировка · линии 9–15",date:"8 октября",
+   status:"part",p1:P1_DEMO.slice(8,15),essay:null,problem:null,marks:null,teacher:{},notes:[]}
+];
+
+/* работа, пришедшая из тренажёра; запускается после инициализации утилит */
+function intake(){
+  const m=location.hash.match(/w=([^&]+)/);
+  if(!m) return;
+  try{
+    const w=JSON.parse(decodeURIComponent(escape(atob(decodeURIComponent(m[1])))));
+    if(!Array.isArray(w.part1)||typeof w.essay!=="string") throw new Error("Некорректная работа");
+    if(w.id&&WORKS.some(work=>work.id===w.id)){
+      history.replaceState(null,"",location.pathname);
+      return;
+    }
+    WORKS.unshift({
+      id:w.id||"in"+Date.now(),name:w.student||"Ученик",group:"демо-передача из тренажёра",
+      variant:w.variant||"Вариант",date:"только что",status:"wait",
+      p1:(w.part1||[]).map(r=>({no:r.no,t:r.topic,max:r.max,answer:r.answer,key:r.key,score:r.score})),
+      essay:w.essay||null,problem:w.problem||null,
+      marks:w.marks?{items:w.marks.items,scores:w.marks.scores}:null,
+      teacher:{},notes:[]
+    });
+    if(saveWorks()){
+      history.replaceState(null,"",location.pathname);
+      toast(w.marks?"Работа и демо-ИИ-разбор добавлены в кабинет":"Работа добавлена в кабинет без ИИ-разбора");
+    }
+  }catch(e){ toast("Не удалось прочитать работу из ссылки"); }
+}
+
+/* ===================== утилиты ===================== */
+const $=s=>document.querySelector(s);
+const esc=s=>String(s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+const plural=(n,a,b,c)=>{const m=n%100;if(m>=11&&m<=14)return c;const l=n%10;return l===1?a:(l>=2&&l<=4?b:c);};
+function toast(t){const el=$("#toast");el.textContent=t;el.classList.add("show");setTimeout(()=>el.classList.remove("show"),2600);}
+
+function saveWorks(){
+  try{localStorage.setItem("rus_teacher_works_v1",JSON.stringify(WORKS));return true;}
+  catch(e){toast("Браузер не разрешил сохранить работы. Сохраните ссылку на полученную работу.");return false;}
+}
+function shortEssay(w){return !!w.essay&&(w.essay.trim().match(/[A-Za-zА-Яа-яЁё0-9-]+/g)||[]).length<150;}
+
+function p1Score(w){return (w.p1||[]).reduce((s,r)=>s+r.score,0);}
+function p1Max(w){return (w.p1||[]).reduce((s,r)=>s+r.max,0);}
+function criterionScore(w,c){return w.teacher[c.c]??(c.auto&&w.marks?w.marks.scores[c.c]:null);}
+function essayScore(w){return shortEssay(w)?0:CRIT.reduce((s,c)=>s+(criterionScore(w,c)??0),0);}
+function teacherDone(w){return shortEssay(w)||CRIT.every(c=>criterionScore(w,c)!=null);}
+function totalScore(w){return p1Score(w)+essayScore(w);}
+
+/* границы предложений в тексте */
+function sentRanges(text){
+  const out=[];let start=0;
+  const parts=text.trim().split(/(?<=[.!?…])\s+/).filter(Boolean);
+  parts.forEach(part=>{const s=text.indexOf(part,start);out.push({s,e:s+part.length});start=s+part.length;});
+  return out;
+}
+
+/* ===================== список ===================== */
+let open=null;
+
+function renderSidebar(){
+  const names=[...new Set(WORKS.map(w=>w.name))];
+  $("#stuList").innerHTML=names.map(n=>{
+    const w=WORKS.find(x=>x.name===n);
+    const wait=WORKS.some(x=>x.name===n&&x.status==="wait");
+    const ini=n.split(" ").map(p=>p[0]).join("").slice(0,2);
+    return '<div class="stu'+(open&&open.name===n?" on":"")+'"><span class="ava2">'+esc(ini)+'</span>'+
+      '<span class="nm">'+esc(n)+'<small>'+esc(w.group)+'</small></span>'+(wait?'<span class="dot"></span>':'')+'</div>';
+  }).join("");
+}
+
+function renderList(){
+  open=null;
+  const wait=WORKS.filter(w=>w.status==="wait").length;
+  let h='<div class="head-row"><h1>Работы учеников</h1>';
+  if(wait) h+='<span class="count">'+wait+' '+plural(wait,"ждёт","ждут","ждут")+' проверки</span>';
+  h+='</div>';
+  if(!WORKS.length) h+='<div class="empty">Пока ни одной работы</div>';
+  WORKS.forEach(w=>{
+    const ini=w.name.split(" ").map(p=>p[0]).join("").slice(0,2);
+    const st=w.status==="wait"?"wait":(w.status==="done"?"done":"part");
+    const label=w.status==="wait"?"ждёт проверки":(w.status==="done"?"проверено":"без сочинения");
+    const max=p1Max(w)+(w.essay?22:0);
+    h+='<div class="wcard" data-id="'+w.id+'"><span class="ava2">'+esc(ini)+'</span>'+
+       '<span class="main"><b>'+esc(w.name)+'</b><span>'+esc(w.variant)+' · '+esc(w.date)+'</span></span>'+
+       '<span class="badge '+st+'">'+label+'</span>'+
+       '<span class="sc">'+totalScore(w)+'<small>из '+max+'</small></span></div>';
+  });
+  $("#main").innerHTML=h;
+  document.querySelectorAll(".wcard").forEach(el=>el.onclick=()=>openWork(el.dataset.id));
+  renderSidebar();
+}
+
+/* ===================== карточка работы ===================== */
+function openWork(id){
+  open=WORKS.find(w=>w.id===id);
+  renderWork();
+  renderSidebar();
+  window.scrollTo({top:0,behavior:"smooth"});
+}
+
+function renderWork(){
+  const w=open, max=p1Max(w)+(w.essay?22:0);
+  let h='<button class="back" id="back">← Ко всем работам</button><div class="work">';
+  h+='<div class="wtop"><div><h2>'+esc(w.name)+'</h2><div class="meta">'+esc(w.variant)+' · '+esc(w.date)+'</div></div>';
+  h+='<div class="total"><b>'+totalScore(w)+' / '+max+'</b><span>первичных баллов</span></div></div>';
+
+  /* часть 1 */
+  const wrong=(w.p1||[]).filter(r=>r.score<r.max);
+  h+='<details class="p1"><summary>Часть 1 — проверено автоматически: '+p1Score(w)+' из '+p1Max(w)+
+     (wrong.length?' · ошибок: '+wrong.length:' · без ошибок')+'</summary>';
+  h+='<table class="ans"><tr><th>№</th><th>Что проверялось</th><th>Ответ ученика</th><th>Эталон</th><th>Балл</th></tr>';
+  (w.p1||[]).forEach(r=>{
+    const ok=r.score===r.max;
+    h+='<tr><td><b>'+r.no+'</b></td><td>'+esc(r.t)+'</td><td class="k">'+esc(r.answer||"—")+'</td>'+
+       '<td class="k" style="color:var(--muted)">'+esc(r.key)+'</td><td class="'+(ok?"ok":"no")+'">'+r.score+'/'+r.max+'</td></tr>';
+  });
+  h+='</table></details>';
+
+  if(!w.essay){
+    h+='<div class="empty">В этой работе сочинения нет — проверять нечего.</div></div>';
+    $("#main").innerHTML=h;$("#back").onclick=renderList;return;
+  }
+
+  /* часть 2 */
+  h+='<div class="grid"><div>';
+  h+='<div class="prob"><span>Проблема, заданная в задании 27</span>'+esc(w.problem||"")+'</div>';
+  if(shortEssay(w)) h+='<div class="note">Объём меньше 150 слов — 0 по всем критериям сочинения. Замечания репетитора можно добавить для тренировки.</div>';
+  h+='<div id="essayBox"></div>';
+  h+='<div class="selbar" id="selbar"><div class="frag" id="selFrag"></div><div class="row">'+
+     '<select id="selCrit">'+CRIT.map(c=>'<option>'+c.c+'</option>').join('')+'</select>'+
+     '<input id="selNote" placeholder="что не так — ученик увидит этот текст">'+
+     '<button class="btn btn-pri btn-sm" id="selAdd">Отметить ошибку</button>'+
+     '<button class="btn btn-gh btn-sm" id="selCancel">Отмена</button></div></div>';
+  h+='<div class="hintline">Выделите фрагмент мышью, чтобы оставить замечание. Сочинение можно проверить без ИИ по всем критериям.'+(w.marks?' Полученный ИИ-разбор показан для демонстрации и не заменяет вашу оценку.':'')+'</div>';
+  h+='</div>';
+
+  /* правая панель */
+  h+='<div><div class="panel"><h3>Оценивание</h3>';
+  h+='<div class="chead">Проверка репетитором — К1–К10</div>';
+  if(w.marks&&!shortEssay(w)) h+='<div class="note">Ученик приложил демо-ИИ-разбор. Предварительные баллы К1–К6 можно изменить. ИИ-разбор — отдельная необязательная опция.</div>';
+  CRIT.forEach(c=>{
+    const cur=shortEssay(w)?0:criterionScore(w,c);
+    h+='<div class="mrow"><div class="lbl"><span><b>'+c.c+'</b> '+c.n+'</span><b>'+(cur!=null?cur:"–")+'/'+c.max+'</b></div><div class="scale">';
+    const scale=c.auto?Array.from({length:c.max+1},(_,i)=>({v:c.max-i,l:'балл'+(c.max-i===1?'':(c.max-i>=2?'а':'ов'))})):SCALE;
+    scale.forEach(s=>{h+='<button aria-label="'+c.c+': '+s.v+' из '+c.max+'" data-c="'+c.c+'" data-v="'+s.v+'"'+(shortEssay(w)?' disabled':'')+' class="'+(cur===s.v?"on":"")+'">'+s.v+'<small>'+s.l+'</small></button>';});
+    h+='</div></div>';
+  });
+  h+='<div class="sum"><span>Сочинение</span><span>'+essayScore(w)+' / 22</span></div>';
+  h+='<div class="sum" style="border-top:1px solid var(--line);font-size:15px"><span>Вся работа</span><span>'+totalScore(w)+' / '+max+'</span></div>';
+  h+='<button class="btn btn-ok" style="width:100%;margin-top:14px" id="finish"'+(teacherDone(w)?"":" disabled")+'>'+
+     (w.status==="done"?"Сохранить изменения":"Завершить проверку")+'</button>';
+  h+='<div class="note">В демо оценки и замечания сохраняются в этом браузере. Отправка результата ученику пока не подключена.</div></div>';
+
+  /* замечания */
+  h+='<div class="panel" style="margin-top:14px"><h3>Замечания</h3>';
+  (w.marks&&!shortEssay(w)?w.marks.items:[]).forEach(m=>{
+    h+='<div class="mark-item" data-go="m'+m.s+'"><span class="tag '+m.level+'">'+m.crit+'</span><span>'+esc(m.text)+'</span></div>';
+  });
+  w.notes.forEach((n,i)=>{
+    h+='<div class="mark-item" data-go="t'+i+'"><span class="tag t">'+n.crit+'</span><span>'+esc(n.text)+
+       '</span><button class="del" data-del="'+i+'" title="удалить">×</button></div>';
+  });
+  if(!w.notes.length) h+='<div style="font-size:12.5px;color:var(--muted);padding:6px 2px">Ваших замечаний пока нет.</div>';
+  h+='</div></div></div></div>';
+
+  $("#main").innerHTML=h;
+  paintEssay();
+  wireWork();
+}
+
+/* отрисовка текста с наложением разметок */
+function paintEssay(){
+  const w=open, text=w.essay, box=$("#essayBox");
+  const sents=sentRanges(text);
+  const ranges=[];
+  (w.marks&&!shortEssay(w)?w.marks.items:[]).forEach(m=>{
+    const r=sents[m.s]; if(!r) return;
+    ranges.push({s:r.s,e:r.e,cls:"k-"+m.level,id:"m"+m.s});
+  });
+  w.notes.forEach((n,i)=>ranges.push({s:n.s,e:n.e,cls:"t-mark",id:"t"+i}));
+
+  const pts=new Set([0,text.length]);
+  ranges.forEach(r=>{pts.add(r.s);pts.add(r.e);});
+  const arr=[...pts].sort((a,b)=>a-b);
+  let out="";
+  for(let i=0;i<arr.length-1;i++){
+    const s=arr[i],e=arr[i+1];
+    const act=ranges.filter(r=>r.s<=s&&r.e>=e);
+    const chunk=esc(text.slice(s,e));
+    out+= act.length ? '<span class="seg '+act.map(a=>a.cls).join(" ")+'" data-id="'+act[act.length-1].id+'">'+chunk+'</span>' : chunk;
+  }
+  box.innerHTML=out;
+}
+
+/* смещение в пределах контейнера */
+function offsetIn(container,node,off){
+  const walker=document.createTreeWalker(container,NodeFilter.SHOW_TEXT);
+  let n,acc=0;
+  while((n=walker.nextNode())){
+    if(n===node) return acc+off;
+    acc+=n.nodeValue.length;
+  }
+  return acc;
+}
+
+let pending=null;
+function wireWork(){
+  $("#back").onclick=renderList;
+
+  document.querySelectorAll("[data-c]").forEach(b=>{
+    b.onclick=()=>{open.teacher[b.dataset.c]=+b.dataset.v;saveWorks();renderWork();};
+  });
+
+  const fin=$("#finish");
+  if(fin) fin.onclick=()=>{
+    open.status="done";
+    saveWorks();
+    toast("Проверка завершена. Результат сохранён в этом демо-кабинете");
+    renderList();
+  };
+
+  document.querySelectorAll("[data-del]").forEach(b=>{
+    b.onclick=e=>{e.stopPropagation();open.notes.splice(+b.dataset.del,1);saveWorks();renderWork();};
+  });
+  document.querySelectorAll("[data-go]").forEach(el=>{
+    el.onclick=()=>{
+      const t=document.querySelector('.seg[data-id="'+el.dataset.go+'"]');
+      if(t){t.scrollIntoView({block:"center",behavior:"smooth"});
+        t.style.outline="2px solid var(--blue)";setTimeout(()=>t.style.outline="",1400);}
+    };
+  });
+
+  const box=$("#essayBox"), bar=$("#selbar");
+  box.onmouseup=()=>{
+    const sel=window.getSelection();
+    if(!sel||sel.isCollapsed||!box.contains(sel.anchorNode)){return;}
+    const r=sel.getRangeAt(0);
+    let s=offsetIn(box,r.startContainer,r.startOffset);
+    let e=offsetIn(box,r.endContainer,r.endOffset);
+    if(e<s){const t=s;s=e;e=t;}
+    if(e-s<2) return;
+    pending={s,e,frag:open.essay.slice(s,e)};
+    $("#selFrag").textContent="«"+pending.frag+"»";
+    $("#selNote").value="";
+    bar.classList.add("show");
+    $("#selNote").focus();
+  };
+  $("#selCancel").onclick=()=>{bar.classList.remove("show");pending=null;window.getSelection().removeAllRanges();};
+  $("#selAdd").onclick=()=>{
+    if(!pending) return;
+    open.notes.push({s:pending.s,e:pending.e,crit:$("#selCrit").value,
+      text:($("#selNote").value.trim()||"ошибка")+" — «"+pending.frag.slice(0,40)+"»"});
+    saveWorks();
+    pending=null;bar.classList.remove("show");
+    window.getSelection().removeAllRanges();
+    renderWork();
+  };
+  $("#selNote").onkeydown=e=>{if(e.key==="Enter")$("#selAdd").click();};
+}
+
+try{
+  const saved=JSON.parse(localStorage.getItem("rus_teacher_works_v1")||"null");
+  if(Array.isArray(saved)&&saved.length&&saved.every(w=>w&&typeof w.id==="string"&&typeof w.name==="string"&&Array.isArray(w.p1)&&w.teacher&&Array.isArray(w.notes))) WORKS=saved;
+}catch(e){}
+intake();
+renderList();
+</script>
+</body>
+</html>

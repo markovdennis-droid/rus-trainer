@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Тренажёр ЕГЭ по русскому языку</title>
+<style>
+:root{
+  --bg:#f3f6fc;--card:#fff;--ink:#17203a;--muted:#687391;--line:#e4e9f4;
+  --blue:#2f6bed;--blue-d:#1d4fc4;--blue-soft:#e9f0ff;
+  --green:#17a673;--green-soft:#e3f7ef;
+  --orange:#f08a24;--orange-soft:#fff2e2;
+  --red:#e2574c;--red-soft:#fdeceb;
+  --r:20px;
+  --sh:0 2px 4px rgba(23,32,58,.04),0 10px 30px rgba(23,32,58,.08);
+  --sh3d:inset 0 -3px 6px rgba(0,0,0,.14),0 8px 18px rgba(47,107,237,.28);
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);
+  font:17px/1.6 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif;-webkit-font-smoothing:antialiased}
+.w{max-width:1080px;margin:0 auto;padding:0 20px}
+a{color:inherit}
+button{font:inherit;cursor:pointer;border:0}
+h1,h2,h3{letter-spacing:-.025em;line-height:1.15;margin:0}
+
+/* шапка */
+header{position:sticky;top:0;z-index:30;background:rgba(243,246,252,.9);backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+.nav{display:flex;align-items:center;gap:14px;padding:13px 20px;max-width:1080px;margin:0 auto}
+.logo{display:flex;align-items:center;gap:10px;font-weight:800;font-size:17px}
+.cube{width:34px;height:34px;border-radius:12px;background:linear-gradient(150deg,#5b8dff,var(--blue));
+  box-shadow:var(--sh3d);display:grid;place-items:center;color:#fff;font-weight:800}
+.nav .sp{flex:1}
+.nav a.lnk{text-decoration:none;color:var(--muted);font-size:15px;font-weight:600}
+@media(max-width:760px){.nav a.lnk{display:none}}
+.btn{border-radius:14px;padding:11px 20px;font-weight:700;font-size:15px;display:inline-block;text-decoration:none}
+.btn-pri{background:linear-gradient(150deg,#4a7ef5,var(--blue));color:#fff;box-shadow:var(--sh3d)}
+.btn-pri:active{transform:translateY(1px)}
+.btn-gh{background:#fff;color:var(--ink);box-shadow:var(--sh);border:1px solid var(--line)}
+.btn-grn{background:linear-gradient(150deg,#2bbd8a,var(--green));color:#fff;
+  box-shadow:inset 0 -3px 6px rgba(0,0,0,.14),0 8px 18px rgba(23,166,115,.3)}
+
+/* герой */
+.hero{padding:62px 0 30px;display:grid;grid-template-columns:1.05fr .95fr;gap:40px;align-items:center}
+@media(max-width:880px){.hero{grid-template-columns:1fr;padding:34px 0 10px}}
+.tag{display:inline-block;background:var(--orange-soft);color:#9a5410;font-size:13px;font-weight:700;
+  padding:6px 13px;border-radius:999px;margin-bottom:16px}
+.hero h1{font-size:50px;font-weight:800}
+@media(max-width:880px){.hero h1{font-size:34px}}
+.hero p.lead{font-size:19px;color:var(--muted);margin:16px 0 26px;max-width:500px}
+.cta{display:flex;gap:12px;flex-wrap:wrap;align-items:center}
+.cta .small{font-size:13.5px;color:var(--muted)}
+
+/* карточка-скрин */
+.screen{background:var(--card);border-radius:24px;box-shadow:var(--sh);padding:18px;border:1px solid var(--line)}
+.screen .bar{display:flex;gap:6px;margin-bottom:14px}
+.screen .bar i{width:10px;height:10px;border-radius:50%;background:#e2e7f2}
+.q{font-size:14.5px;line-height:1.5}
+.q .num{display:inline-block;background:var(--blue);color:#fff;font-weight:800;border-radius:9px;
+  padding:1px 9px;font-size:13px;margin-right:8px}
+.q ul{list-style:none;padding:0;margin:12px 0 0;font-size:14px}
+.q li{padding:7px 10px;border-radius:10px;margin-bottom:5px;background:#f7f9fe}
+.q li.hit{background:var(--green-soft);color:#0c6e4c;font-weight:600}
+.q li.bad{background:var(--red-soft);color:#97332b;font-weight:600}
+.minirow{display:flex;gap:8px;margin-top:14px;flex-wrap:wrap}
+.pill{font-size:12px;font-weight:700;padding:5px 11px;border-radius:999px;background:var(--blue-soft);color:var(--blue)}
+.pill.g{background:var(--green-soft);color:var(--green)}
+.pill.o{background:var(--orange-soft);color:#9a5410}
+
+/* числа */
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin:46px 0}
+@media(max-width:760px){.stats{grid-template-columns:repeat(2,1fr)}}
+.stat{background:var(--card);border:1px solid var(--line);border-radius:var(--r);padding:18px;box-shadow:var(--sh)}
+.stat b{display:block;font-size:30px;font-weight:800;letter-spacing:-.03em}
+.stat span{font-size:13.5px;color:var(--muted);line-height:1.35;display:block;margin-top:4px}
+
+/* секции */
+section{padding:46px 0;scroll-margin-top:76px}
+h2.sec{font-size:34px;font-weight:800;margin-bottom:10px}
+@media(max-width:880px){h2.sec{font-size:26px}}
+p.sub{color:var(--muted);max-width:620px;margin:0 0 28px}
+
+.grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+@media(max-width:880px){.grid3{grid-template-columns:1fr}}
+.feat{background:var(--card);border:1px solid var(--line);border-radius:var(--r);padding:22px;box-shadow:var(--sh)}
+.ic{width:44px;height:44px;border-radius:15px;display:grid;place-items:center;font-size:20px;margin-bottom:14px;
+  box-shadow:inset 0 -3px 6px rgba(0,0,0,.12)}
+.ic.b{background:linear-gradient(150deg,#6f9bff,var(--blue));color:#fff}
+.ic.g{background:linear-gradient(150deg,#45cf9d,var(--green));color:#fff}
+.ic.o{background:linear-gradient(150deg,#ffb259,var(--orange));color:#fff}
+.feat h3{font-size:18px;margin-bottom:7px}
+.feat p{margin:0;font-size:15px;color:var(--muted);line-height:1.55}
+
+/* проверка 27 */
+.split{display:grid;grid-template-columns:1fr 1fr;gap:18px;align-items:start}
+@media(max-width:880px){.split{grid-template-columns:1fr}}
+.box{background:var(--card);border:1px solid var(--line);border-radius:var(--r);padding:24px;box-shadow:var(--sh)}
+.bar-split{display:flex;height:40px;border-radius:12px;overflow:hidden;margin:16px 0 10px;font-size:13px;font-weight:700;color:#fff}
+.bar-split .m{background:linear-gradient(150deg,#45cf9d,var(--green));display:grid;place-items:center;flex:10}
+.bar-split .h{background:linear-gradient(150deg,#8e9ab8,#687391);display:grid;place-items:center;flex:12}
+.klist{font-size:14.5px;margin:0;padding:0;list-style:none}
+.klist li{display:flex;gap:10px;padding:7px 0;border-bottom:1px solid var(--line)}
+.klist li:last-child{border:0}
+.klist .k{font-weight:800;min-width:34px}
+.klist .nm{flex:1;color:var(--muted)}
+.klist .p{font-weight:700}
+.klist li.auto .k{color:var(--green)}
+.klist li.man .k{color:var(--muted)}
+
+/* тарифы */
+.prices{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+@media(max-width:880px){.prices{grid-template-columns:1fr}}
+.price{background:var(--card);border:1px solid var(--line);border-radius:var(--r);padding:24px;box-shadow:var(--sh);display:flex;flex-direction:column}
+.price.hl{border:2px solid var(--blue);position:relative}
+.price.hl::after{content:"Без репетитора";position:absolute;top:-11px;right:18px;background:var(--blue);color:#fff;
+  font-size:11px;font-weight:700;padding:3px 10px;border-radius:999px}
+.price h3{font-size:19px}
+.price .sum{font-size:36px;font-weight:800;letter-spacing:-.03em;margin:10px 0 4px}
+.price .per{font-size:13px;color:var(--muted);margin-bottom:16px}
+.price ul{list-style:none;padding:0;margin:0 0 20px;font-size:14.5px;flex:1}
+.price li{padding:6px 0 6px 24px;position:relative;color:var(--muted)}
+.price li::before{content:"";position:absolute;left:0;top:13px;width:13px;height:7px;border-left:2.5px solid var(--green);
+  border-bottom:2.5px solid var(--green);transform:rotate(-45deg)}
+.price li.no::before{border-color:#c6cddd}
+
+/* репетиторам */
+.tutor{background:linear-gradient(150deg,#1f2a4d,#17203a);color:#fff;border-radius:26px;padding:38px}
+.tutor h2{font-size:30px;font-weight:800;margin-bottom:10px}
+.tutor p{color:#aeb9d6;max-width:560px}
+.tutor .nums{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin:26px 0}
+@media(max-width:760px){.tutor .nums{grid-template-columns:1fr}}
+.tutor .nums div{background:rgba(255,255,255,.07);border-radius:16px;padding:16px}
+.tutor .nums b{display:block;font-size:24px;font-weight:800}
+.tutor .nums span{font-size:13.5px;color:#aeb9d6}
+
+/* faq */
+details.faq{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:16px 20px;margin-bottom:10px;box-shadow:var(--sh)}
+details.faq summary{cursor:pointer;font-weight:700;font-size:16.5px;list-style:none}
+details.faq summary::-webkit-details-marker{display:none}
+details.faq summary::after{content:"+";float:right;color:var(--muted);font-weight:400;font-size:22px;line-height:1}
+details.faq[open] summary::after{content:"–"}
+details.faq p{color:var(--muted);font-size:15.5px;margin:10px 0 0}
+
+footer{padding:40px 0 60px;color:var(--muted);font-size:13.5px;border-top:1px solid var(--line);margin-top:40px}
+footer a{color:var(--muted)}
+
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    --bg:#0f1426;--card:#19203a;--ink:#e9edf8;--muted:#8d99b9;--line:#283151;
+    --blue-soft:#1d2950;--green-soft:#143529;--orange-soft:#392813;--red-soft:#391e1d;
+    --sh:0 2px 4px rgba(0,0,0,.2),0 10px 30px rgba(0,0,0,.3);
+  }
+  :root:not([data-theme="light"]) header{background:rgba(15,20,38,.9)}
+  :root:not([data-theme="light"]) .q li{background:#141a30}
+  :root:not([data-theme="light"]) .btn-gh{background:#19203a}
+}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="nav">
+    <div class="logo"><span class="cube">Р</span> Тренажёр ЕГЭ</div>
+    <a class="lnk" href="#how">Как устроено</a>
+    <a class="lnk" href="#check">Проверка сочинения</a>
+    <a class="lnk" href="#price">Цены</a>
+    <a class="lnk" href="#tutor">Репетиторам</a>
+    <span class="sp"></span>
+    <a class="btn btn-gh" href="teacher.html">Войти</a>
+  </div>
+</header>
+
+<div class="w">
+
+  <div class="hero">
+    <div>
+      <span class="tag">Формат ЕГЭ-2027 · обновлено по демоверсии ФИПИ</span>
+      <h1>Русский язык.<br>27 заданий, 50 баллов.</h1>
+      <p class="lead">Банк по всем линиям кодификатора, пробники с таймером и бланком, тренировочный режим с разбором каждой ошибки и проверка сочинения.</p>
+      <div class="cta">
+        <a class="btn btn-pri" href="#price">Начать подготовку</a>
+        <a class="btn btn-gh" href="trainer.html">Посмотреть демо-вариант</a>
+        <a class="btn btn-gh" href="guide.html">Как пользоваться демо</a><span class="small">Демо-вариант — бесплатно, без карты</span>
+      </div>
+    </div>
+
+    <div class="screen">
+      <div class="bar"><i></i><i></i><i></i></div>
+      <div class="q">
+        <span class="num">16</span>Укажите предложения, в которых нужно поставить ОДНУ запятую.
+        <ul>
+          <li>Ночью ветер злится да стучит в окно.</li>
+          <li class="hit">Солнце село<b>,</b> и над рекой поднялся туман.</li>
+          <li class="hit">Он был красив<b>,</b> умён и необыкновенно обаятелен.</li>
+          <li class="bad">Я люблю и зиму и лето и осень.</li>
+        </ul>
+        <div class="minirow">
+          <span class="pill g">верно · 1 балл</span>
+          <span class="pill">разбор правила</span>
+          <span class="pill o">тренировочный режим</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="stats">
+    <div class="stat"><b>27</b><span>линий заданий по кодификатору</span></div>
+    <div class="stat"><b>50</b><span>первичных баллов в варианте</span></div>
+    <div class="stat"><b>210</b><span>минут в пробнике, как на экзамене</span></div>
+    <div class="stat"><b>22</b><span>балла за сочинение по новым критериям</span></div>
+  </div>
+
+  <section id="how">
+    <h2 class="sec">Два режима на одном банке</h2>
+    <p class="sub">Одно и то же задание работает по-разному: в тренировке оно учит, в пробнике измеряет. Это принципиально — если готовиться только с подсказками, на экзамене будет просадка.</p>
+    <div class="grid3">
+      <div class="feat">
+        <div class="ic b">✎</div>
+        <h3>Тренировка</h3>
+        <p>Буквы вставляются прямо в слово, запятые ставятся кликом по месту в предложении. Система проверяет каждую позицию отдельно и показывает, где именно пропуск, а где лишний знак.</p>
+      </div>
+      <div class="feat">
+        <div class="ic g">⏱</div>
+        <h3>Пробник</h3>
+        <p>Экзаменационный вид: все задания подряд, 210 минут, ответ вводится так же, как переносится в бланк — без пробелов и запятых. В конце первичный балл и разбор по каждой линии.</p>
+      </div>
+      <div class="feat">
+        <div class="ic o">◎</div>
+        <h3>Конструктор</h3>
+        <p>Собрать подборку по номерам (только 10 и 16) или по темам — приставки, Н и НН, обособленные члены. Удобно добивать то, что проседает, не прогоняя весь вариант.</p>
+      </div>
+    </div>
+  </section>
+
+  <section id="check">
+    <h2 class="sec">Как проверяется сочинение</h2>
+    <p class="sub">Задания 1–26 проверяются автоматически по ключам, без ИИ, и входят в годовой доступ. Для сочинения №27 можно выбрать проверку своим репетитором или отдельно купить учебный ИИ-разбор.</p>
+    <div class="split">
+      <div class="box">
+        <h3 style="font-size:19px">Сочинение №27: два способа проверки</h3>
+        <p style="color:var(--muted);font-size:15px"><b>С репетитором.</b> Отправьте сочинение в его кабинет. Репетитор оценивает содержание и грамотность по К1–К10, оставляет замечания. ИИ для этого не нужен.</p>
+        <p style="color:var(--muted);font-size:15px"><b>Самостоятельно с ИИ.</b> Купите отдельный пакет учебных разборов задания №27: подсказки по структуре, аргументации и доработке сочинения.</p>
+        <p style="font-size:13.5px;color:var(--muted);margin:0">ИИ-разбор приобретается отдельно и не входит в годовой доступ. В демо показан пример разбора; настоящая ИИ-модель пока не подключена.</p>
+      </div>
+      <div class="box">
+        <h3 style="font-size:19px;margin-bottom:14px">Критерии, демоверсия 2027</h3>
+        <ul class="klist">
+          <li class="auto"><span class="k">К1</span><span class="nm">Отражение позиции автора</span><span class="p">1</span></li>
+          <li class="auto"><span class="k">К2</span><span class="nm">Комментарий к позиции</span><span class="p">3</span></li>
+          <li class="auto"><span class="k">К3</span><span class="nm">Своё отношение и обоснование</span><span class="p">2</span></li>
+          <li class="auto"><span class="k">К4</span><span class="nm">Фактическая точность</span><span class="p">1</span></li>
+          <li class="auto"><span class="k">К5</span><span class="nm">Логичность речи</span><span class="p">2</span></li>
+          <li class="auto"><span class="k">К6</span><span class="nm">Этические нормы</span><span class="p">1</span></li>
+          <li class="man"><span class="k">К7</span><span class="nm">Орфография</span><span class="p">3</span></li>
+          <li class="man"><span class="k">К8</span><span class="nm">Пунктуация</span><span class="p">3</span></li>
+          <li class="man"><span class="k">К9</span><span class="nm">Грамматические нормы</span><span class="p">3</span></li>
+          <li class="man"><span class="k">К10</span><span class="nm">Речевые нормы</span><span class="p">3</span></li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section id="price">
+    <h2 class="sec">Годовой доступ и дополнительные опции</h2>
+    <p class="sub">Оплата один раз за 365 дней доступа. Автопроверка заданий 1–26 работает по ключам, без ИИ. Проверка сочинения — отдельный выбор.</p>
+    <div class="prices">
+      <div class="price hl">
+        <h3>Самостоятельно</h3>
+        <div class="sum">990 ₽</div>
+        <div class="per">за год · только тренажёр</div>
+        <ul>
+          <li>задания 1–26 с автоматической проверкой по ключам</li>
+          <li>тренировочный режим и пробники</li>
+          <li>поле для сочинения №27</li>
+          <li class="no">проверки сочинения покупаются отдельно</li>
+        </ul>
+        <a class="btn btn-pri" href="trainer.html">Посмотреть демо тренажёра</a>
+      </div>
+      <div class="price">
+        <h3>Через репетитора</h3>
+        <div class="sum">1290 ₽</div>
+        <div class="per">за год · доступ ученика по приглашению</div>
+        <ul>
+          <li>тот же тренажёр и автопроверка заданий 1–26</li>
+          <li>привязка к кабинету своего репетитора</li>
+          <li>передача сочинений и результатов репетитору</li>
+          <li>оценки и замечания от вашего репетитора</li>
+        </ul>
+        <a class="btn btn-gh" href="#tutor">Как заниматься с репетитором</a>
+      </div>
+      <div class="price">
+        <h3>ИИ-разбор сочинения</h3>
+        <div class="sum">от 300 ₽</div>
+        <div class="per">отдельная опция · только задание №27</div>
+        <ul>
+          <li>для самостоятельной подготовки без репетитора</li>
+          <li>учебный разбор содержания и структуры сочинения</li>
+          <li>подсказки для доработки текста</li>
+          <li>пакет проверок сверх годового доступа</li>
+        </ul>
+        <a class="btn btn-grn" href="trainer.html#essay">Посмотреть демо ИИ-разбора</a>
+      </div>
+    </div>
+    <p style="font-size:13.5px;color:var(--muted);margin-top:14px">Пакеты ИИ-разборов №27: 10 — 300 ₽, 20 — 500 ₽, 40 — 850 ₽. ИИ не используется для заданий 1–26. Условия занятий и проверки работ вы согласуете со своим репетитором. В демо оплата и активация доступа пока не подключены.</p>
+  </section>
+
+  <section id="tutor">
+    <div class="tutor">
+      <h2>Репетиторам — кабинет бесплатно</h2>
+      <p>Вы приглашаете учеников в свой кабинет. Ученик оплачивает 1290 ₽ за год доступа к тренажёру по приглашению. Задания 1–26 проверяются по ключам, а сочинение №27 вы проверяете самостоятельно по всем критериям. Покупать ИИ-разбор для работы с репетитором не требуется. Из оплаты 1290 ₽ репетитору начисляется 300 ₽, сервису остаётся 990 ₽ до налогов и комиссий оплаты.</p>
+      <div class="nums">
+        <div><b>300 ₽</b><span>репетитору с каждого оплаченного года доступа ученика</span></div>
+        <div><b>К1–К10</b><span>проверка сочинения репетитором</span></div>
+        <div><b>0 ₽</b><span>стоимость кабинета, без ограничений по числу учеников</span></div>
+      </div>
+      <a class="btn btn-pri" href="teacher.html">Завести кабинет</a>
+    </div>
+  </section>
+
+  <section>
+    <h2 class="sec">Частые вопросы</h2>
+    <details class="faq" open><summary>Задания настоящие?</summary>
+      <p>Задания авторские, составлены по кодификатору и спецификации ФИПИ 2027 года: та же структура, те же типы ответов, те же правила начисления баллов. Это не перепечатка вариантов из сборников.</p></details>
+    <details class="faq"><summary>Можно готовиться без репетитора?</summary>
+      <p>Да. Самостоятельный доступ стоит 990 ₽ за год: задания 1–26 проверяются по ключам без ИИ. Для сочинения №27 можно отдельно купить пакет учебных ИИ-разборов. Доступ через своего репетитора стоит 1290 ₽ за год; сочинения передаются в его кабинет, и для их проверки ИИ покупать не нужно.</p></details>
+    <details class="faq"><summary>Что значит «код на одном устройстве»?</summary>
+      <p>Вход с нового устройства отключает предыдущее. Так доступ остаётся вашим и не расходится по чужим рукам.</p></details>
+    <details class="faq"><summary>Сайт открывается из России?</summary>
+      <p>Да, напрямую, без VPN.</p></details>
+  </section>
+
+  <footer>
+    ИП Марков Денис Владимирович · ИНН 614312281766<br>
+    Поддержка: trainingseller@yandex.ru<br>
+    <a href="#">Оферта</a> · <a href="#">Политика конфиденциальности</a> · <a href="#">Возврат средств</a>
+  </footer>
+
+</div>
+</body>
+</html>
