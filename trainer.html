@@ -6,6 +6,7 @@
 <title>Тренажёр ЕГЭ · Русский язык</title>
 <style>
 :root{
+  color-scheme:light;
   --bg:#f4f6fb;--card:#fff;--ink:#1b2440;--muted:#6b7694;--line:#e3e8f2;
   --blue:#2f6bed;--blue-soft:#e8f0ff;--green:#17a673;--green-soft:#e4f7ef;
   --orange:#f08a24;--orange-soft:#fff1e0;--red:#e2574c;--red-soft:#fdeceb;
@@ -15,7 +16,9 @@
 body{margin:0;background:var(--bg);color:var(--ink);
   font:16px/1.55 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif;-webkit-font-smoothing:antialiased}
 button{font:inherit;cursor:pointer}
-input,textarea{font:inherit;color:inherit}
+input,textarea{font:inherit;color:var(--ink);background:var(--card);caret-color:var(--ink);-webkit-text-fill-color:currentColor}
+input::placeholder,textarea::placeholder{color:var(--muted);-webkit-text-fill-color:var(--muted);opacity:1}
+input:-webkit-autofill,textarea:-webkit-autofill{-webkit-text-fill-color:var(--ink);box-shadow:0 0 0 1000px var(--card) inset;caret-color:var(--ink)}
 
 header{position:sticky;top:0;z-index:20;background:rgba(255,255,255,.93);backdrop-filter:blur(8px);border-bottom:1px solid var(--line)}
 .head-in{max-width:1180px;margin:0 auto;padding:12px 20px;display:flex;align-items:center;gap:16px;flex-wrap:wrap}
@@ -28,7 +31,7 @@ header{position:sticky;top:0;z-index:20;background:rgba(255,255,255,.93);backdro
 .timer.warn{background:var(--red-soft);color:var(--red)}
 .modes{display:flex;background:var(--bg);border:1px solid var(--line);border-radius:999px;padding:3px}
 .modes button{border:0;background:transparent;color:var(--muted);padding:6px 16px;border-radius:999px;font-size:14px;font-weight:600}
-.modes button.on{background:#fff;color:var(--ink);box-shadow:var(--shadow)}
+.modes button.on{background:var(--card);color:var(--ink);box-shadow:var(--shadow)}
 
 .wrap{max-width:1180px;margin:0 auto;padding:22px 20px 80px;display:grid;grid-template-columns:230px 1fr;gap:22px}
 @media(max-width:900px){.wrap{grid-template-columns:1fr;padding:16px 14px 70px}}
@@ -183,6 +186,7 @@ details.json pre{background:#1b2440;color:#c8d6f5;padding:14px;border-radius:12p
 
 @media (prefers-color-scheme:dark){
   :root:not([data-theme="light"]){
+    color-scheme:dark;
     --bg:#11162a;--card:#1a2138;--ink:#e9edf8;--muted:#8e9ab8;--line:#2a3350;
     --blue-soft:#1e2a4d;--green-soft:#15372b;--orange-soft:#3b2a15;--red-soft:#3a1f1e;
     --shadow:0 2px 4px rgba(0,0,0,.2),0 8px 24px rgba(0,0,0,.3);
@@ -194,6 +198,10 @@ details.json pre{background:#1b2440;color:#c8d6f5;padding:14px;border-radius:12p
   :root:not([data-theme="light"]) .gap{background:#2a3350;border-color:#3a4568}
   :root:not([data-theme="light"]) .modal{background:#1a2138}
   :root:not([data-theme="light"]) .demo-ribbon{color:#f0c892}
+  :root:not([data-theme="light"]) .sent.k-ok{background:var(--green-soft)}
+  :root:not([data-theme="light"]) .sent.k-warn{background:var(--orange-soft)}
+  :root:not([data-theme="light"]) .sent.k-bad{background:var(--red-soft)}
+  :root:not([data-theme="light"]) .mark-item:hover{background:var(--blue-soft)}
 }
 </style>
 </head>
