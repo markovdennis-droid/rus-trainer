@@ -1,0 +1,754 @@
+[
+ {
+  "correct": "абрикосов",
+  "wrong": null
+ },
+ {
+  "correct": "апельсинов",
+  "wrong": null
+ },
+ {
+  "correct": "аэропорту",
+  "wrong": null
+ },
+ {
+  "correct": "басен",
+  "wrong": null
+ },
+ {
+  "correct": "блюдец",
+  "wrong": null
+ },
+ {
+  "correct": "болеепоздно",
+  "wrong": null
+ },
+ {
+  "correct": "варежек",
+  "wrong": null
+ },
+ {
+  "correct": "вафель",
+  "wrong": null
+ },
+ {
+  "correct": "великий",
+  "wrong": null
+ },
+ {
+  "correct": "взгляни",
+  "wrong": null
+ },
+ {
+  "correct": "взмок",
+  "wrong": null
+ },
+ {
+  "correct": "вишен",
+  "wrong": null
+ },
+ {
+  "correct": "вобщем",
+  "wrong": null
+ },
+ {
+  "correct": "возрасты",
+  "wrong": null
+ },
+ {
+  "correct": "восьмисот",
+  "wrong": null
+ },
+ {
+  "correct": "восьмисотому",
+  "wrong": null
+ },
+ {
+  "correct": "восьмистах",
+  "wrong": null
+ },
+ {
+  "correct": "восьмьюдесятью",
+  "wrong": null
+ },
+ {
+  "correct": "восьмьюстами",
+  "wrong": null
+ },
+ {
+  "correct": "времени",
+  "wrong": null
+ },
+ {
+  "correct": "выздоровеет",
+  "wrong": null
+ },
+ {
+  "correct": "вызовы",
+  "wrong": null
+ },
+ {
+  "correct": "выслушав",
+  "wrong": null
+ },
+ {
+  "correct": "высоко",
+  "wrong": null
+ },
+ {
+  "correct": "высох",
+  "wrong": null
+ },
+ {
+  "correct": "глубокий",
+  "wrong": null
+ },
+ {
+  "correct": "две",
+  "wrong": null
+ },
+ {
+  "correct": "двести",
+  "wrong": null
+ },
+ {
+  "correct": "дветысячи",
+  "wrong": null
+ },
+ {
+  "correct": "двумястами",
+  "wrong": null
+ },
+ {
+  "correct": "двух",
+  "wrong": null
+ },
+ {
+  "correct": "двухстах",
+  "wrong": "георгинов"
+ },
+ {
+  "correct": "девяноста",
+  "wrong": null
+ },
+ {
+  "correct": "девятьюстами",
+  "wrong": null
+ },
+ {
+  "correct": "деревень",
+  "wrong": null
+ },
+ {
+  "correct": "десятых",
+  "wrong": null
+ },
+ {
+  "correct": "джинсов",
+  "wrong": null
+ },
+ {
+  "correct": "директора",
+  "wrong": null
+ },
+ {
+  "correct": "длиннее",
+  "wrong": null
+ },
+ {
+  "correct": "договоры",
+  "wrong": null
+ },
+ {
+  "correct": "достигли",
+  "wrong": null
+ },
+ {
+  "correct": "древний",
+  "wrong": null
+ },
+ {
+  "correct": "ездите",
+  "wrong": null
+ },
+ {
+  "correct": "ему",
+  "wrong": null
+ },
+ {
+  "correct": "железнодорожное",
+  "wrong": "железодорожное"
+ },
+ {
+  "correct": "железобетонное",
+  "wrong": null
+ },
+ {
+  "correct": "жжёт",
+  "wrong": null
+ },
+ {
+  "correct": "жжёшь",
+  "wrong": null
+ },
+ {
+  "correct": "заведующий",
+  "wrong": null
+ },
+ {
+  "correct": "заезжай",
+  "wrong": null
+ },
+ {
+  "correct": "зажжём",
+  "wrong": null
+ },
+ {
+  "correct": "зажжёшь",
+  "wrong": null
+ },
+ {
+  "correct": "закутавшись",
+  "wrong": null
+ },
+ {
+  "correct": "запечатлеть",
+  "wrong": null
+ },
+ {
+  "correct": "запрещающий",
+  "wrong": null
+ },
+ {
+  "correct": "запрыгнуть",
+  "wrong": null
+ },
+ {
+  "correct": "звонче",
+  "wrong": null
+ },
+ {
+  "correct": "звучный",
+  "wrong": null
+ },
+ {
+  "correct": "инженеры",
+  "wrong": null
+ },
+ {
+  "correct": "испечёт",
+  "wrong": null
+ },
+ {
+  "correct": "клади",
+  "wrong": null
+ },
+ {
+  "correct": "компьютеры",
+  "wrong": null
+ },
+ {
+  "correct": "красивая",
+  "wrong": null
+ },
+ {
+  "correct": "красивее",
+  "wrong": null
+ },
+ {
+  "correct": "красивый",
+  "wrong": null
+ },
+ {
+  "correct": "кухонь",
+  "wrong": null
+ },
+ {
+  "correct": "лопнувшие",
+  "wrong": null
+ },
+ {
+  "correct": "ляг",
+  "wrong": null
+ },
+ {
+  "correct": "лягте",
+  "wrong": null
+ },
+ {
+  "correct": "макарон",
+  "wrong": null
+ },
+ {
+  "correct": "мандаринов",
+  "wrong": null
+ },
+ {
+  "correct": "марта",
+  "wrong": "восьми"
+ },
+ {
+  "correct": "млекопитающие",
+  "wrong": null
+ },
+ {
+  "correct": "мозолью",
+  "wrong": null
+ },
+ {
+  "correct": "мой",
+  "wrong": null
+ },
+ {
+  "correct": "молодой",
+  "wrong": null
+ },
+ {
+  "correct": "молоть",
+  "wrong": null
+ },
+ {
+  "correct": "надёжно",
+  "wrong": null
+ },
+ {
+  "correct": "наиболее",
+  "wrong": null
+ },
+ {
+  "correct": "недра",
+  "wrong": null
+ },
+ {
+  "correct": "обгрызенное",
+  "wrong": null
+ },
+ {
+  "correct": "обгрызенный",
+  "wrong": null
+ },
+ {
+  "correct": "обеим",
+  "wrong": null
+ },
+ {
+  "correct": "обеих",
+  "wrong": null
+ },
+ {
+  "correct": "озяб",
+  "wrong": null
+ },
+ {
+  "correct": "окорока",
+  "wrong": null
+ },
+ {
+  "correct": "округа",
+  "wrong": null
+ },
+ {
+  "correct": "осетин",
+  "wrong": null
+ },
+ {
+  "correct": "падежей",
+  "wrong": null
+ },
+ {
+  "correct": "партизан",
+  "wrong": null
+ },
+ {
+  "correct": "педиатра",
+  "wrong": "педиатора"
+ },
+ {
+  "correct": "первопроходцем",
+  "wrong": null
+ },
+ {
+  "correct": "платьев",
+  "wrong": null
+ },
+ {
+  "correct": "плохой",
+  "wrong": null
+ },
+ {
+  "correct": "побережий",
+  "wrong": null
+ },
+ {
+  "correct": "повидлом",
+  "wrong": null
+ },
+ {
+  "correct": "погон",
+  "wrong": null
+ },
+ {
+  "correct": "поезжай",
+  "wrong": null
+ },
+ {
+  "correct": "поезжайте",
+  "wrong": null
+ },
+ {
+  "correct": "поздно",
+  "wrong": null
+ },
+ {
+  "correct": "полисы",
+  "wrong": null
+ },
+ {
+  "correct": "положи",
+  "wrong": null
+ },
+ {
+  "correct": "положите",
+  "wrong": null
+ },
+ {
+  "correct": "полутора",
+  "wrong": null
+ },
+ {
+  "correct": "полутораста",
+  "wrong": null
+ },
+ {
+  "correct": "получаса",
+  "wrong": null
+ },
+ {
+  "correct": "пополам",
+  "wrong": null
+ },
+ {
+  "correct": "попробуем",
+  "wrong": null
+ },
+ {
+  "correct": "поскользнуться",
+  "wrong": null
+ },
+ {
+  "correct": "пострижётся",
+  "wrong": null
+ },
+ {
+  "correct": "потухла",
+  "wrong": null
+ },
+ {
+  "correct": "почерк",
+  "wrong": null
+ },
+ {
+  "correct": "приду",
+  "wrong": null
+ },
+ {
+  "correct": "промокший",
+  "wrong": null
+ },
+ {
+  "correct": "проповедует",
+  "wrong": null
+ },
+ {
+  "correct": "проронив",
+  "wrong": null
+ },
+ {
+  "correct": "процента",
+  "wrong": null
+ },
+ {
+  "correct": "прочитав",
+  "wrong": null
+ },
+ {
+  "correct": "психиатру",
+  "wrong": "психиатору"
+ },
+ {
+  "correct": "пятисот",
+  "wrong": null
+ },
+ {
+  "correct": "пятисотый",
+  "wrong": null
+ },
+ {
+  "correct": "пятистах",
+  "wrong": null
+ },
+ {
+  "correct": "пятьюдесятью",
+  "wrong": null
+ },
+ {
+  "correct": "пятьюстами",
+  "wrong": null
+ },
+ {
+  "correct": "развевающиеся",
+  "wrong": null
+ },
+ {
+  "correct": "раздумий",
+  "wrong": null
+ },
+ {
+  "correct": "разожжёт",
+  "wrong": null
+ },
+ {
+  "correct": "разъезжайтесь",
+  "wrong": null
+ },
+ {
+  "correct": "рождения",
+  "wrong": null
+ },
+ {
+  "correct": "рояля",
+  "wrong": null
+ },
+ {
+  "correct": "самоклеящаяся",
+  "wrong": null
+ },
+ {
+  "correct": "сапог",
+  "wrong": null
+ },
+ {
+  "correct": "семисот",
+  "wrong": null
+ },
+ {
+  "correct": "семисотый",
+  "wrong": null
+ },
+ {
+  "correct": "семистах",
+  "wrong": null
+ },
+ {
+  "correct": "семью",
+  "wrong": null
+ },
+ {
+  "correct": "семьюдесятью",
+  "wrong": null
+ },
+ {
+  "correct": "семьюстами",
+  "wrong": null
+ },
+ {
+  "correct": "сладкий",
+  "wrong": null
+ },
+ {
+  "correct": "следующем",
+  "wrong": null
+ },
+ {
+  "correct": "следующий",
+  "wrong": null
+ },
+ {
+  "correct": "смотря",
+  "wrong": null
+ },
+ {
+  "correct": "солдат",
+  "wrong": null
+ },
+ {
+  "correct": "солжёт",
+  "wrong": null
+ },
+ {
+  "correct": "сосисок",
+  "wrong": null
+ },
+ {
+  "correct": "сплетен",
+  "wrong": null
+ },
+ {
+  "correct": "сплеч",
+  "wrong": null
+ },
+ {
+  "correct": "стережёт",
+  "wrong": null
+ },
+ {
+  "correct": "сто",
+  "wrong": null
+ },
+ {
+  "correct": "сторожа",
+  "wrong": null
+ },
+ {
+  "correct": "стрижёт",
+  "wrong": null
+ },
+ {
+  "correct": "строго",
+  "wrong": null
+ },
+ {
+  "correct": "термосы",
+  "wrong": null
+ },
+ {
+  "correct": "токари",
+  "wrong": null
+ },
+ {
+  "correct": "точно",
+  "wrong": null
+ },
+ {
+  "correct": "тремястами",
+  "wrong": null
+ },
+ {
+  "correct": "тренеры",
+  "wrong": null
+ },
+ {
+  "correct": "триста",
+  "wrong": null
+ },
+ {
+  "correct": "трёмстам",
+  "wrong": null
+ },
+ {
+  "correct": "трёхсот",
+  "wrong": null
+ },
+ {
+  "correct": "туфель",
+  "wrong": "егэ"
+ },
+ {
+  "correct": "туфлю",
+  "wrong": null
+ },
+ {
+  "correct": "тысяча",
+  "wrong": null
+ },
+ {
+  "correct": "тюлем",
+  "wrong": null
+ },
+ {
+  "correct": "угрюмый",
+  "wrong": null
+ },
+ {
+  "correct": "умный",
+  "wrong": null
+ },
+ {
+  "correct": "уронив",
+  "wrong": null
+ },
+ {
+  "correct": "услышав",
+  "wrong": null
+ },
+ {
+  "correct": "ущелий",
+  "wrong": null
+ },
+ {
+  "correct": "хорошая",
+  "wrong": null
+ },
+ {
+  "correct": "цыган",
+  "wrong": null
+ },
+ {
+  "correct": "честно",
+  "wrong": null
+ },
+ {
+  "correct": "четырьмястами",
+  "wrong": null
+ },
+ {
+  "correct": "четырёмстам",
+  "wrong": null
+ },
+ {
+  "correct": "чистая",
+  "wrong": null
+ },
+ {
+  "correct": "чулок",
+  "wrong": null
+ },
+ {
+  "correct": "шампунем",
+  "wrong": null
+ },
+ {
+  "correct": "шампуня",
+  "wrong": null
+ },
+ {
+  "correct": "шестисот",
+  "wrong": null
+ },
+ {
+  "correct": "шестистам",
+  "wrong": "шестиста"
+ },
+ {
+  "correct": "шестистах",
+  "wrong": null
+ },
+ {
+  "correct": "шестьсот",
+  "wrong": null
+ },
+ {
+  "correct": "шестьюстами",
+  "wrong": null
+ },
+ {
+  "correct": "шкафу",
+  "wrong": null
+ },
+ {
+  "correct": "шофёры",
+  "wrong": null
+ },
+ {
+  "correct": "яблок",
+  "wrong": null
+ },
+ {
+  "correct": "яблонь",
+  "wrong": null
+ },
+ {
+  "correct": "яслей",
+  "wrong": "ясель"
+ }
+]

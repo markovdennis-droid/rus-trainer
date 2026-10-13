@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Тренажёр ЕГЭ · Русский язык — демо-вариант</title>
+<title>Тренажёр ЕГЭ · Русский язык</title>
 <style>
 :root{
   --bg:#f4f6fb;--card:#fff;--ink:#1b2440;--muted:#6b7694;--line:#e3e8f2;
@@ -19,7 +19,7 @@ input,textarea{font:inherit;color:inherit}
 
 header{position:sticky;top:0;z-index:20;background:rgba(255,255,255,.93);backdrop-filter:blur(8px);border-bottom:1px solid var(--line)}
 .head-in{max-width:1180px;margin:0 auto;padding:12px 20px;display:flex;align-items:center;gap:16px;flex-wrap:wrap}
-.logo{display:flex;align-items:center;gap:10px;font-weight:700;letter-spacing:-.01em}
+.logo{display:flex;align-items:center;gap:10px;font-weight:700;letter-spacing:-.01em;text-decoration:none;color:inherit}
 .logo .dot{width:30px;height:30px;border-radius:10px;background:linear-gradient(145deg,var(--blue),#6f9bff);
   box-shadow:inset 0 -2px 4px rgba(0,0,0,.18),0 4px 10px rgba(47,107,237,.35);display:grid;place-items:center;color:#fff;font-size:15px}
 .variant{color:var(--muted);font-size:14px}
@@ -31,8 +31,6 @@ header{position:sticky;top:0;z-index:20;background:rgba(255,255,255,.93);backdro
 .modes button.on{background:#fff;color:var(--ink);box-shadow:var(--shadow)}
 
 .wrap{max-width:1180px;margin:0 auto;padding:22px 20px 80px;display:grid;grid-template-columns:230px 1fr;gap:22px}
-.wrap>main,.essay-grid>div{min-width:0}
-.table-scroll{max-width:100%;overflow-x:auto}
 @media(max-width:900px){.wrap{grid-template-columns:1fr;padding:16px 14px 70px}}
 aside{position:sticky;top:76px;align-self:start}
 @media(max-width:900px){aside{position:static}}
@@ -40,11 +38,13 @@ aside{position:sticky;top:76px;align-self:start}
 .panel h3{margin:0 0 12px;font-size:13px;text-transform:uppercase;letter-spacing:.06em;color:var(--muted)}
 .nums{display:grid;grid-template-columns:repeat(5,1fr);gap:6px}
 .nums button{aspect-ratio:1;border:1px solid var(--line);background:#fff;border-radius:10px;font-size:13px;font-weight:600;color:var(--ink);padding:0}
-.nums button:disabled{color:#c3cada;background:#fafbfe;cursor:not-allowed}
 .nums button.cur{background:var(--blue);border-color:var(--blue);color:#fff}
 .nums button.done{background:var(--green-soft);border-color:#bfe9d7;color:var(--green)}
 .nums button.cur.done{background:var(--blue);border-color:var(--blue);color:#fff}
 .sidebtn{width:100%;margin-top:10px}
+.progress{margin-top:12px;font-size:12.5px;color:var(--muted)}
+.pbar{height:6px;background:var(--line);border-radius:999px;overflow:hidden;margin-top:6px}
+.pbar i{display:block;height:100%;background:var(--green);border-radius:999px;transition:width .3s}
 
 .task{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow);padding:26px 28px}
 @media(max-width:900px){.task{padding:20px 16px}}
@@ -55,7 +55,7 @@ aside{position:sticky;top:76px;align-self:start}
 .chip.o{background:var(--orange-soft);color:var(--orange)}
 .chip.n{background:var(--bg);color:var(--muted);border:1px solid var(--line)}
 .topic{color:var(--muted);font-size:14px;margin-bottom:18px}
-.stem{margin:0 0 18px}
+.stem{margin:0 0 18px;white-space:pre-wrap}
 .opts{list-style:none;padding:0;margin:0 0 18px}
 .opts li{padding:8px 0;border-bottom:1px dashed var(--line)}
 .opts li:last-child{border:0}
@@ -87,7 +87,7 @@ input.ans:focus{outline:0;border-color:var(--blue)}
 
 .punct{font-size:18px;line-height:2.4;margin:0 0 16px}
 .punct .s{display:block;margin-bottom:10px}
-.gap{display:inline-block;width:16px;height:22px;padding:0;margin:0 -2px;border-radius:5px;vertical-align:middle;
+.gap{display:inline-block;width:16px;height:22px;margin:0 -2px;border-radius:5px;vertical-align:middle;
   background:#eef1f8;border:1px dashed #cfd6e6;cursor:pointer;position:relative;top:2px}
 .gap:hover{background:#dfe6f7}
 .gap.set,.gap.ok,.gap.extra{border-style:solid}
@@ -166,7 +166,6 @@ details.json pre{background:#1b2440;color:#c8d6f5;padding:14px;border-radius:12p
 .tp.digits{background:var(--blue-soft);color:var(--blue)}
 .tp.seq{background:var(--orange-soft);color:var(--orange)}
 .tp.essay{background:#ece4fb;color:#6b3fd4}
-.mtx tr.live td{background:rgba(47,107,237,.05)}
 
 .overlay{position:fixed;inset:0;background:rgba(27,36,64,.5);display:none;place-items:center;z-index:50;padding:20px}
 .overlay.show{display:grid}
@@ -180,6 +179,7 @@ details.json pre{background:#1b2440;color:#c8d6f5;padding:14px;border-radius:12p
 .rep-row.part .rp{color:var(--orange)}
 .rep-row.no .rp{color:var(--red)}
 .demo-ribbon{background:var(--orange-soft);border:1px solid #f7d9b4;color:#8a5212;font-size:13px;padding:10px 14px;border-radius:12px;margin-bottom:18px;line-height:1.5}
+.fatal{background:var(--red-soft);border:1px solid #f6cdc9;border-radius:14px;padding:20px;margin:40px auto;max-width:620px;line-height:1.6}
 
 @media (prefers-color-scheme:dark){
   :root:not([data-theme="light"]){
@@ -189,21 +189,9 @@ details.json pre{background:#1b2440;color:#c8d6f5;padding:14px;border-radius:12p
   }
   :root:not([data-theme="light"]) header{background:rgba(26,33,56,.93)}
   :root:not([data-theme="light"]) .nums button{background:#1a2138}
-  :root:not([data-theme="light"]) .nums button.done{background:var(--green-soft)}
-  :root:not([data-theme="light"]) .nums button.cur{background:var(--blue);color:#fff}
-  :root:not([data-theme="light"]) .nums button:disabled{background:#161c30;color:#454f6e}
-  :root:not([data-theme="light"]) .modes button.on{background:var(--card);color:var(--ink)}
-  :root:not([data-theme="light"]) input,:root:not([data-theme="light"]) textarea{background:var(--card)}
-  :root:not([data-theme="light"]) .sent.k-ok{background:#1b4a38}
-  :root:not([data-theme="light"]) .sent.k-warn{background:#4a3817}
-  :root:not([data-theme="light"]) .sent.k-bad{background:#4d2422}
   :root:not([data-theme="light"]) .source,:root:not([data-theme="light"]) .marked{background:#161c30}
   :root:not([data-theme="light"]) .btn-gh{background:#1a2138}
   :root:not([data-theme="light"]) .gap{background:#2a3350;border-color:#3a4568}
-  :root:not([data-theme="light"]) .gap.set{background:var(--blue);border-color:var(--blue)}
-  :root:not([data-theme="light"]) .gap.ok{background:var(--green);border-color:var(--green)}
-  :root:not([data-theme="light"]) .gap.extra{background:var(--red);border-color:var(--red)}
-  :root:not([data-theme="light"]) .gap.miss{background:var(--red-soft);border-color:var(--red)}
   :root:not([data-theme="light"]) .modal{background:#1a2138}
   :root:not([data-theme="light"]) .demo-ribbon{color:#f0c892}
 }
@@ -213,8 +201,9 @@ details.json pre{background:#1b2440;color:#c8d6f5;padding:14px;border-radius:12p
 
 <header>
   <div class="head-in">
-    <a class="logo" href="index.html" style="text-decoration:none;color:inherit"><span class="dot">Р</span> Тренажёр ЕГЭ</a>
-    <span class="variant">Русский язык · демо-вариант&nbsp;1 · формат 2027</span>
+    <a class="logo" href="index.html"><span class="dot">Р</span> Тренажёр ЕГЭ</a>
+    <span class="variant" id="vtitle">Русский язык</span>
+    <span class="variant" id="whoami"></span>
     <div class="spacer"></div>
     <div class="modes">
       <button id="mExam" class="on">Экзамен</button>
@@ -229,16 +218,14 @@ details.json pre{background:#1b2440;color:#c8d6f5;padding:14px;border-radius:12p
     <div class="panel">
       <h3>Задания</h3>
       <div class="nums" id="nums"></div>
+      <div class="progress" id="progress"></div>
       <button class="btn btn-gh sidebtn" id="showMatrix">Матрица КИМ</button>
       <button class="btn btn-ok sidebtn" id="finish">Завершить</button>
     </div>
   </aside>
 
   <main>
-    <div class="demo-ribbon">
-      <b>Демо-прототип.</b> Структура, баллы и правила проверки — по демоверсии ЕГЭ-2027. Задания и текст авторские, не из ФИПИ.
-      Заполнено 8 позиций из 27 — по одной на каждый тип ответа.
-    </div>
+    <div class="demo-ribbon" id="ribbon"></div>
     <div id="task"></div>
     <div class="foot">
       <button class="btn btn-gh" id="prev">← Назад</button>
@@ -249,83 +236,111 @@ details.json pre{background:#1b2440;color:#c8d6f5;padding:14px;border-radius:12p
 
 <div class="overlay" id="overlay">
   <div class="modal">
-    <div style="color:var(--muted);font-size:14px" id="repCap">Результат демо-варианта</div>
+    <div style="color:var(--muted);font-size:14px" id="repCap">Результат</div>
     <div class="score-big" id="scoreBig">—</div>
     <div id="repList" style="margin-top:16px"></div>
-    <button class="btn btn-ok" style="width:100%;margin-top:20px" id="submitWork">Отправить репетитору · демо-кабинет</button>
+    <button class="btn btn-ok" style="width:100%;margin-top:20px" id="submitWork">Сдать работу преподавателю</button>
     <button class="btn btn-gh" style="width:100%;margin-top:10px" id="closeRep">Закрыть</button>
   </div>
 </div>
 
-<script src="tasks.js"></script>
+<script src="bank/db.js"></script>
+<script src="bank/variants/v1.js"></script>
 <script>
 /* ============================================================
-   МАТРИЦА КИМ ЕГЭ-2027 ПО РУССКОМУ ЯЗЫКУ
-   Это валидатор: по нему собирается и проверяется любой вариант.
-   type:  word   — слово (словосочетание)
-          digits — последовательность цифр, порядок НЕ важен
-          seq    — последовательность, порядок важен, есть частичный балл
-          essay  — развёрнутый ответ
+   МАТРИЦА КИМ ЕГЭ-2027 — спецификация, по которой собран вариант.
+   type: word | digits (порядок не важен) | seq (порядок важен) | essay
    ============================================================ */
-const LINES = [
-  {no:1, max:1, type:"word",   t:"Самостоятельный подбор слова (средства связи)"},
-  {no:2, max:1, type:"digits", t:"Лексическое значение слова в тексте"},
-  {no:3, max:1, type:"digits", t:"Стилистический анализ фрагмента"},
-  {no:4, max:1, type:"digits", t:"Орфоэпические нормы (ударение)"},
-  {no:5, max:1, type:"word",   t:"Лексические нормы (паронимы)"},
-  {no:6, max:1, type:"word",   t:"Лексические нормы (исключить / заменить слово)"},
-  {no:7, max:1, type:"word",   t:"Грамматические нормы (исправить форму слова)"},
-  {no:8, max:2, type:"seq",    t:"Синтаксические нормы. Грамматические ошибки"},
-  {no:9, max:1, type:"digits", t:"Правописание корней"},
-  {no:10,max:1, type:"digits", t:"Правописание приставок"},
-  {no:11,max:1, type:"digits", t:"Правописание суффиксов (кроме глагольных)"},
-  {no:12,max:1, type:"digits", t:"Правописание личных окончаний и суффиксов причастий"},
-  {no:13,max:1, type:"digits", t:"Правописание НЕ и НИ"},
-  {no:14,max:1, type:"digits", t:"Слитное, дефисное, раздельное написание"},
-  {no:15,max:1, type:"digits", t:"Правописание Н и НН"},
-  {no:16,max:1, type:"digits", t:"Знаки препинания в ССП и при однородных членах"},
-  {no:17,max:1, type:"digits", t:"Знаки препинания при обособленных членах"},
-  {no:18,max:1, type:"digits", t:"Знаки препинания при вводных словах и обращениях"},
-  {no:19,max:1, type:"digits", t:"Знаки препинания в сложноподчинённом предложении"},
-  {no:20,max:1, type:"digits", t:"Знаки препинания в сложном предложении с разными видами связи"},
-  {no:21,max:1, type:"digits", t:"Пунктуационный анализ (одно и то же правило)"},
-  {no:22,max:2, type:"seq",    t:"Изобразительно-выразительные средства языка"},
-  {no:23,max:1, type:"digits", t:"Соответствие высказываний содержанию текста"},
-  {no:24,max:1, type:"digits", t:"Функционально-смысловые типы речи"},
-  {no:25,max:1, type:"word",   t:"Лексический анализ текста (выписать слово)"},
-  {no:26,max:1, type:"digits", t:"Средства связи предложений в тексте"},
-  {no:27,max:22,type:"essay",  t:"Сочинение-рассуждение по проблеме текста"}
+const LINES=[
+ {no:1, max:1,type:"word",  t:"Средства связи предложений в тексте"},
+ {no:2, max:1,type:"digits",t:"Лексическое значение слова"},
+ {no:3, max:1,type:"digits",t:"Стилистический анализ текста"},
+ {no:4, max:1,type:"digits",t:"Орфоэпические нормы (ударение)"},
+ {no:5, max:1,type:"word",  t:"Лексические нормы (паронимы)"},
+ {no:6, max:1,type:"word",  t:"Лексические нормы (исключить лишнее слово)"},
+ {no:7, max:1,type:"word",  t:"Морфологические нормы (форма слова)"},
+ {no:8, max:2,type:"seq",   t:"Синтаксические нормы. Грамматические ошибки"},
+ {no:9, max:1,type:"digits",t:"Правописание корней"},
+ {no:10,max:1,type:"digits",t:"Правописание приставок"},
+ {no:11,max:1,type:"digits",t:"Правописание суффиксов (кроме -Н-/-НН-)"},
+ {no:12,max:1,type:"digits",t:"Личные окончания глаголов и суффиксы причастий"},
+ {no:13,max:1,type:"digits",t:"Правописание НЕ и НИ"},
+ {no:14,max:1,type:"digits",t:"Слитное, дефисное, раздельное написание"},
+ {no:15,max:1,type:"digits",t:"Правописание -Н- и -НН-"},
+ {no:16,max:1,type:"digits",t:"Знаки препинания в ССП и при однородных членах"},
+ {no:17,max:1,type:"digits",t:"Знаки препинания при обособленных членах"},
+ {no:18,max:1,type:"digits",t:"Знаки препинания при вводных словах"},
+ {no:19,max:1,type:"digits",t:"Знаки препинания в сложноподчинённом предложении"},
+ {no:20,max:1,type:"digits",t:"Знаки препинания в предложении с разными видами связи"},
+ {no:21,max:1,type:"digits",t:"Пунктуационный анализ (одно правило)"},
+ {no:22,max:2,type:"seq",   t:"Изобразительно-выразительные средства языка"},
+ {no:23,max:1,type:"digits",t:"Соответствие высказываний содержанию текста"},
+ {no:24,max:1,type:"digits",t:"Функционально-смысловые типы речи"},
+ {no:25,max:1,type:"word",  t:"Лексический анализ текста"},
+ {no:26,max:1,type:"digits",t:"Средства связи предложений в тексте"},
+ {no:27,max:22,type:"essay",t:"Сочинение-рассуждение по проблеме текста"}
 ];
-const PART1_MAX = LINES.filter(l=>l.no<27).reduce((s,l)=>s+l.max,0); // 28
-const TOTAL_MAX = PART1_MAX + 22;                                    // 50
+const PART1_MAX=LINES.filter(l=>l.no<27).reduce((s,l)=>s+l.max,0);
+const TOTAL_MAX=PART1_MAX+22;
 
-/* ---------- критерии сочинения, демоверсия 2027 ---------- */
-const CRITERIA = [
-  {c:"К1", n:"Отражение позиции автора",            max:1, auto:true,  grp:"Содержание"},
-  {c:"К2", n:"Комментарий к позиции автора",         max:3, auto:true,  grp:"Содержание"},
-  {c:"К3", n:"Собственное отношение и обоснование",  max:2, auto:true,  grp:"Содержание"},
-  {c:"К4", n:"Фактическая точность речи",            max:1, auto:true,  grp:"Речевое оформление"},
-  {c:"К5", n:"Логичность речи",                      max:2, auto:true,  grp:"Речевое оформление"},
-  {c:"К6", n:"Соблюдение этических норм",            max:1, auto:true,  grp:"Речевое оформление"},
-  {c:"К7", n:"Орфография",                           max:3, auto:false, grp:"Грамотность"},
-  {c:"К8", n:"Пунктуация",                           max:3, auto:false, grp:"Грамотность"},
-  {c:"К9", n:"Грамматические нормы",                 max:3, auto:false, grp:"Грамотность"},
-  {c:"К10",n:"Речевые нормы",                        max:3, auto:false, grp:"Грамотность"}
+const CRITERIA=[
+ {c:"К1", n:"Отражение позиции автора",           max:1,auto:true, grp:"Содержание"},
+ {c:"К2", n:"Комментарий к позиции автора",        max:3,auto:true, grp:"Содержание"},
+ {c:"К3", n:"Своё отношение и обоснование",        max:2,auto:true, grp:"Содержание"},
+ {c:"К4", n:"Фактическая точность речи",           max:1,auto:true, grp:"Речевое оформление"},
+ {c:"К5", n:"Логичность речи",                     max:2,auto:true, grp:"Речевое оформление"},
+ {c:"К6", n:"Соблюдение этических норм",           max:1,auto:true, grp:"Речевое оформление"},
+ {c:"К7", n:"Орфография",                          max:3,auto:false,grp:"Грамотность"},
+ {c:"К8", n:"Пунктуация",                          max:3,auto:false,grp:"Грамотность"},
+ {c:"К9", n:"Грамматические нормы",                max:3,auto:false,grp:"Грамотность"},
+ {c:"К10",n:"Речевые нормы",                       max:3,auto:false,grp:"Грамотность"}
 ];
 
-/* ============================================================ */
-const state={i:0,mode:"exam",answers:{},checked:{},drill:{},essay:"",marks:null,view:"task"};
 const $=s=>document.querySelector(s);
 const esc=s=>String(s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
 const line=no=>LINES.find(l=>l.no===no);
-
-/* нормализация под бланк: без пробелов, запятых и прочих символов */
+const plural=(n,a,b,c)=>{const m=n%100;if(m>=11&&m<=14)return c;const l=n%10;return l===1?a:(l>=2&&l<=4?b:c);};
 function toBlank(v){return String(v||"").toLowerCase().replace(/ё/g,"е").replace(/[^a-zа-я0-9]/g,"");}
 function sorted(v){return toBlank(v).split("").sort().join("");}
 
+/* ---------- загрузка варианта ---------- */
+const V=(window.VARIANTS||{}).v1;
+if(!V){
+  document.body.innerHTML='<div class="fatal"><b>Вариант не загрузился.</b><br>'+
+   'Файл <code>bank/variants/v1.js</code> не найден. Положите папку <code>bank</code> рядом с этой страницей '+
+   'или откройте сайт целиком, а не отдельный файл.</div>';
+  throw new Error("variant not loaded");
+}
+const TASKS=V.tasks.slice().sort((a,b)=>a.no-b.no);
+const task=no=>TASKS.find(t=>t.no===no);
+
+$("#vtitle").textContent=V.subject+" · "+V.title+" · формат "+V.format;
+
+/* кто решает: ученик из кабинета или гость */
+const ME=(window.DB&&DB.currentStudent)?DB.currentStudent():null;
+if (ME && ME.subject !== "rus") { location.replace("student.html"); throw new Error("subject mismatch"); }
+$("#whoami").innerHTML=ME
+  ? "· "+esc(ME.name)
+  : '· <a href="student.html" style="color:var(--blue)">войти в кабинет</a>';
+$("#ribbon").innerHTML="<b>Демо-вариант.</b> "+esc(V.origin)+
+  " Оплата и ИИ имитируются; данные и ключи проверки находятся в браузере.";
+
+const state={i:0,mode:"exam",answers:{},checked:{},drill:{},essay:"",marks:null,view:"task"};
+const draftKey="rus-draft-v1-"+(ME?ME.id:"guest");
+try {
+  const saved=JSON.parse(localStorage.getItem(draftKey)||"null");
+  if(saved){ state.answers=saved.answers||{};state.drill=saved.drill||{};state.essay=saved.essay||""; }
+} catch(e) {}
+let draftSubmitted=false;
+function saveDraft(){if(draftSubmitted)return;try{localStorage.setItem(draftKey,JSON.stringify({answers:state.answers,drill:state.drill,essay:state.essay}));}catch(e){}}
+document.addEventListener("input",saveDraft);
+document.addEventListener("click",()=>setTimeout(saveDraft,0));
+window.addEventListener("pagehide",saveDraft);
+
+/* ---------- таймер ---------- */
 let left=3*3600+30*60;
 setInterval(()=>{
-  if(state.mode!=="exam"||left<=0) return;
+  if(state.mode!=="exam"||left<=0)return;
   left--;
   const h=Math.floor(left/3600),m=Math.floor(left%3600/60),s=left%60;
   const t=$("#timer");
@@ -333,74 +348,74 @@ setInterval(()=>{
   t.classList.toggle("warn",left<900);
 },1000);
 
-function renderNums(){
-  const box=$("#nums");box.innerHTML="";
-  for(let n=1;n<=27;n++){
-    const idx=TASKS.findIndex(t=>t.no===n);
-    const b=document.createElement("button");
-    b.textContent=n;
-    if(idx<0) b.disabled=true;
-    else{
-      if(idx===state.i&&state.view==="task") b.classList.add("cur");
-      if(hasAnswer(idx)) b.classList.add("done");
-      b.onclick=()=>{state.i=idx;state.view="task";render();};
-    }
-    box.appendChild(b);
-  }
-}
-function hasAnswer(idx){
-  const t=TASKS[idx];
-  if(t.no===27) return (state.essay||"").trim().length>0;
-  const a=state.answers[t.no];
-  if(t.left) return Array.isArray(a)&&a.filter(Boolean).length===t.left.length;
-  return !!(a&&String(a).trim());
-}
-
-/* ---------- проверка части 1 по правилам демоверсии ---------- */
+/* ---------- проверка по правилам демоверсии ---------- */
 function scoreOf(t){
   const L=line(t.no);
-  if(L.type==="essay") return 0;
+  if(L.type==="essay")return 0;
   let a=state.answers[t.no];
-  if(Array.isArray(a)) a=a.join("");
+  if(Array.isArray(a))a=a.join("");
   a=toBlank(a);
-  if(!a) return 0;
+  if(!a)return 0;
   const keys=t.key.map(toBlank);
 
   if(L.type==="seq"){
     const k=keys[0];
-    if(a.length!==k.length) return 0;          // лишние символы — 0
+    if(a.length!==k.length)return 0;              // лишние символы — 0
     let wrong=0;
-    for(let i=0;i<k.length;i++) if(a[i]!==k[i]) wrong++;
-    if(wrong===0) return 2;
-    if(wrong<=2) return 1;                      // ошибки на 1–2 позициях — 1 балл
-    return 0;
+    for(let i=0;i<k.length;i++)if(a[i]!==k[i])wrong++;
+    return wrong===0?2:(wrong<=2?1:0);            // 1–2 неверные позиции — 1 балл
   }
   if(L.type==="digits"){
-    return keys.some(k=>sorted(a)===sorted(k)) ? L.max : 0;  // порядок не важен
+    // порядок не важен, кроме ответов-одиночных номеров (match:"exact")
+    return t.match==="exact"
+      ? (keys.some(k=>a===k)?L.max:0)
+      : (keys.some(k=>sorted(a)===sorted(k))?L.max:0);
   }
-  return keys.some(k=>a===k) ? L.max : 0;       // слово
+  return keys.some(k=>a===k)?L.max:0;
+}
+
+/* ---------- навигация ---------- */
+function hasAnswer(t){
+  if(t.no===27)return (state.essay||"").trim().length>0;
+  const a=state.answers[t.no];
+  if(t.left)return Array.isArray(a)&&a.filter(Boolean).length===t.left.length;
+  return !!(a&&String(a).trim());
+}
+function renderNums(){
+  const box=$("#nums");box.innerHTML="";
+  TASKS.forEach((t,idx)=>{
+    const b=document.createElement("button");
+    b.textContent=t.no;
+    if(idx===state.i&&state.view==="task")b.classList.add("cur");
+    if(hasAnswer(t))b.classList.add("done");
+    b.onclick=()=>{state.i=idx;state.view="task";render();};
+    box.appendChild(b);
+  });
+  const done=TASKS.filter(hasAnswer).length;
+  $("#progress").innerHTML="Заполнено "+done+" из "+TASKS.length+
+    '<div class="pbar"><i style="width:'+Math.round(done/TASKS.length*100)+'%"></i></div>';
 }
 
 /* ---------- отрисовка ---------- */
 function render(){
   renderNums();
   if(state.view==="matrix"){renderMatrix();return;}
-  const t=TASKS[state.i], L=line(t.no);
+  const t=TASKS[state.i],L=line(t.no);
   const drilling=state.mode==="drill"&&t.drill;
   let h='<div class="task"><div class="task-head"><div class="task-no">Задание '+t.no+'</div>';
   h+='<span class="chip">'+L.max+' '+plural(L.max,"балл","балла","баллов")+'</span>';
   h+='<span class="chip n">'+typeLabel(L.type)+'</span>';
-  if(drilling) h+='<span class="chip o">тренировочный режим</span>';
-  if(L.type==="essay") h+='<span class="chip g">ИИ-разбор — по желанию</span>';
+  if(drilling)h+='<span class="chip o">тренировочный режим</span>';
+  if(L.type==="essay")h+='<span class="chip g">Виртуальный учитель</span>';
   h+='</div><div class="topic">'+esc(L.t)+'</div>';
 
-  if(t.useText) h+=renderText();
+  if(t.text)h+=renderText(t.text);
 
-  if(L.type==="essay") h+=renderEssay(t);
-  else if(drilling&&t.drill.kind==="letters") h+=renderLetters(t);
-  else if(drilling&&t.drill.kind==="commas") h+=renderCommas(t);
-  else if(t.left) h+=renderMatch(t,L);
-  else h+=renderPlain(t,L);
+  if(L.type==="essay")h+=renderEssay(t);
+  else if(drilling&&t.drill.kind==="letters")h+=renderLetters(t);
+  else if(drilling&&t.drill.kind==="commas")h+=renderCommas(t);
+  else if(t.left)h+=renderMatch(t);
+  else h+=renderPlain(t);
 
   if(L.type!=="essay"){
     h+='<div class="actions">';
@@ -411,27 +426,35 @@ function render(){
   }
   h+='</div>';
   $("#task").innerHTML=h;
-  wire(t,drilling);
+  wire(t);
   $("#prev").disabled=state.i===0;
   $("#next").disabled=state.i===TASKS.length-1;
-  if(state.mode==="drill"&&state.checked[t.no]) checkDrill(t);
+  if(state.mode==="drill"&&state.checked[t.no])checkDrill(t);
   window.scrollTo({top:0,behavior:"smooth"});
 }
-function typeLabel(t){return {word:"слово",digits:"цифры, порядок не важен",seq:"последовательность, порядок важен",essay:"развёрнутый ответ"}[t];}
-
-function renderText(){
-  let h='<div class="source"><span class="cap">'+esc(TEXT.title)+'</span>';
-  TEXT.sentences.forEach((s,i)=>{h+='<span class="sn">('+(i+1)+')</span> '+esc(s)+' ';});
+function typeLabel(t){
+  return {word:"слово",digits:"цифры, порядок не важен",
+          seq:"последовательность, порядок важен",essay:"развёрнутый ответ"}[t];
+}
+function renderText(id){
+  const tx=V.texts[id];if(!tx)return"";
+  let h='<div class="source"><span class="cap">'+esc(tx.caption)+'</span>';
+  tx.sentences.forEach((s,i)=>{h+='<span class="sn">('+(i+1)+')</span> '+esc(s)+' ';});
   return h+'</div>';
 }
-function renderPlain(t,L){
+function renderPlain(t){
   let h='<p class="stem">'+esc(t.stem)+'</p>';
-  if(t.opts){h+='<ul class="opts">';t.opts.forEach((o,i)=>{h+='<li><span class="n">'+(i+1)+')</span> '+esc(o)+'</li>';});h+='</ul>';}
-  h+='<div class="answer-row"><label for="ans">Ответ:</label><input class="ans" id="ans" value="'+esc(state.answers[t.no]||"")+'" placeholder="как в бланке">';
-  h+='<span class="blank-hint">без пробелов и запятых</span></div>';
+  if(t.opts){
+    h+='<ul class="opts">';
+    t.opts.forEach((o,i)=>{h+='<li><span class="n">'+(i+1)+')</span> '+esc(o)+'</li>';});
+    h+='</ul>';
+  }
+  h+='<div class="answer-row"><label>Ответ:</label><input class="ans" id="ans" value="'+
+     esc(state.answers[t.no]||"")+'" placeholder="как в бланке">'+
+     '<span class="blank-hint">без пробелов и запятых</span></div>';
   return h;
 }
-function renderMatch(t,L){
+function renderMatch(t){
   let h='<p class="stem">'+esc(t.stem)+'</p><table class="match">';
   t.left.forEach(r=>{h+='<tr><td>'+r[0]+'</td><td>'+esc(r[1])+'</td></tr>';});
   h+='</table><div style="font-size:14px;color:var(--muted);margin-bottom:8px">Список:</div><ul class="opts">';
@@ -461,29 +484,29 @@ function renderCommas(t){
       h+=esc(w);
       if(wi<s.words.length-1){
         const on=((state.drill[t.no]||{})[si+"-"+wi])?"set":"";
-        h+='<button type="button" class="gap '+on+'" data-si="'+si+'" data-wi="'+wi+'" aria-label="Запятая после «'+esc(w)+'», предложение '+(si+1)+'" aria-pressed="'+(on?"true":"false")+'"></button> ';
+        h+='<span class="gap '+on+'" data-si="'+si+'" data-wi="'+wi+'"></span> ';
       }
     });
     h+='</span>';
   });
   return h+'</div>';
 }
-
 function wordCount(s){return (s.trim().match(/[A-Za-zА-Яа-яЁё0-9-]+/g)||[]).length;}
 
 function renderEssay(t){
   const words=wordCount(state.essay);
-  let h='<div class="source" style="border-left-color:var(--orange);font-family:inherit;font-size:16px">';
-  h+='<span class="cap">Проблема, поставленная в задании</span><b>'+esc(t.problem)+'</b></div>';
+  let h='<div class="source" style="border-left-color:var(--orange);font-family:inherit;font-size:16px">'+
+        '<span class="cap">Проблема, поставленная в задании</span><b>'+esc(t.problem)+'</b></div>';
   h+='<p class="stem">'+esc(t.stem)+'</p><div class="essay-grid"><div>';
-  h+= state.marks ? '<div class="marked" id="marked">'+renderMarked()+'</div>'
-                  : '<textarea class="essay" id="essay" placeholder="Начните писать сочинение...">'+esc(state.essay)+'</textarea>';
-  h+='<div class="wc"><span>Объём: <b id="wordCount" class="'+(words>=150?"ok":"")+'">'+words+'</b> <span id="wordLabel">'+plural(words,"слово","слова","слов")+'</span> · минимум 150</span>';
-  if(state.marks) h+='<span><a href="#" id="backEdit" style="color:var(--blue)">вернуться к правке</a></span>';
+  h+= state.marks?'<div class="marked" id="marked">'+renderMarked()+'</div>'
+                 :'<textarea class="essay" id="essay" placeholder="Начните писать сочинение...">'+esc(state.essay)+'</textarea>';
+  h+='<div class="wc"><span>Объём: <b class="'+(words>=150?"ok":"")+'">'+words+'</b> '+
+     plural(words,"слово","слова","слов")+' · минимум 150</span>';
+  if(state.marks)h+='<span><a href="#" id="backEdit" style="color:var(--blue)">вернуться к правке</a></span>';
   h+='</div>';
-  h+='<div class="alarm" id="essayAlarm"'+(words>0&&words<150?'':' hidden')+'>Меньше 150 слов — работа оценивается нулём по всем критериям.</div>';
-  h+='<div class="actions"><button class="btn btn-pri" id="vt"'+(words<20?" disabled":"")+'>Проверить с ИИ · демо</button>';
-  h+='<span style="color:var(--muted);font-size:13.5px">Отдельная платная опция для №27. Сейчас — бесплатный пример разбора, ИИ не подключён.</span></div></div>';
+  if(words>0&&words<150)h+='<div class="alarm">Меньше 150 слов — по правилам 2027 года работа не оценивается: 0 баллов по всем критериям.</div>';
+  h+='<div class="actions"><button class="btn btn-pri" id="vt"'+(words<20?" disabled":"")+'>Проверить · Виртуальный учитель</button>'+
+     '<span style="color:var(--muted);font-size:13.5px">осталось проверок: 15</span></div></div>';
 
   h+='<div><div class="panel"><h3>Критерии (демоверсия 2027)</h3><div class="crit">';
   let got=0,maxAuto=0,grp="";
@@ -491,12 +514,15 @@ function renderEssay(t){
     if(c.grp!==grp){grp=c.grp;h+='<div class="crit-head">'+grp+'</div>';}
     const sc=state.marks?(state.marks.scores[c.c]??0):null;
     if(c.auto){maxAuto+=c.max;if(sc!=null)got+=sc;}
-    h+='<div class="crit-row '+(c.auto?"auto":"manual")+'"><span class="code">'+c.c+'</span><span class="nm">'+c.n+'</span>';
-    h+='<span class="pt">'+(c.auto?(sc!=null?sc:"–"):"—")+'/'+c.max+'</span></div>';
+    h+='<div class="crit-row '+(c.auto?"auto":"manual")+'"><span class="code">'+c.c+'</span>'+
+       '<span class="nm">'+c.n+'</span><span class="pt">'+(c.auto?(sc!=null?sc:"–"):"—")+'/'+c.max+'</span></div>';
   });
-  h+='</div><div class="crit-total"><span>Демо-оценка</span><span>'+(state.marks?got:"–")+' / '+maxAuto+'</span></div>';
-  h+='<div class="note"><b>Проверка сочинения — на выбор.</b> ИИ-разбор №27 покупается отдельно для самостоятельной подготовки. Если занимаетесь с репетитором, отправьте сочинение ему без ИИ-разбора — он оценит К1–К10. Задания 1–26 проверяются по ключам и не расходуют ИИ-проверки.</div></div>';
-  if(state.marks) h+=renderMarksList();
+  h+='</div><div class="crit-total"><span>Машина насчитала</span><span>'+(state.marks?got:"–")+' / '+maxAuto+'</span></div>';
+  h+='<div class="crit-total" style="border-top:1px solid var(--line);font-weight:600">'+
+     '<span style="color:var(--muted)">Ждёт преподавателя</span><span style="color:var(--muted)">12</span></div>';
+  h+='<div class="note"><b>К7–К10 = 12 баллов из 22.</b> Больше половины задания — грамотность, и её машина не считает: '+
+     'она только подсвечивает подозрительные места, баллы ставит человек.</div></div>';
+  if(state.marks)h+=renderMarksList();
   h+='</div></div>';
   return h;
 }
@@ -509,32 +535,29 @@ function renderMarked(){
 function renderMarksList(){
   let h='<div class="panel" style="margin-top:14px"><h3>Замечания</h3><div class="marks-list">';
   state.marks.items.forEach(m=>{
-    h+='<div class="mark-item" data-go="'+m.s+'"><span class="tag '+m.level+'">'+m.crit+'</span><span>'+esc(m.text)+
-       '<br><span style="color:var(--muted)">предложение '+(m.s+1)+'</span></span></div>';
+    h+='<div class="mark-item" data-go="'+m.s+'"><span class="tag '+m.level+'">'+m.crit+'</span><span>'+
+       esc(m.text)+'<br><span style="color:var(--muted)">предложение '+(m.s+1)+'</span></span></div>';
   });
-  h+='</div><details class="json"><summary>Пример обмена с ИИ (демо)</summary><pre>'+
+  h+='</div><details class="json"><summary>Что уходит в модель и что приходит обратно</summary><pre>'+
      esc(JSON.stringify(state.marks.payload,null,2))+'</pre></details></div>';
   return h;
 }
-
-/* ---------- матрица ---------- */
 function renderMatrix(){
-  let h='<div class="task"><div class="task-head"><div class="task-no">Матрица КИМ</div>';
-  h+='<span class="chip">часть 1 — '+PART1_MAX+'</span><span class="chip">часть 2 — 22</span><span class="chip g">итого '+TOTAL_MAX+' первичных</span></div>';
-  h+='<div class="topic">Структура и правила проверки по демоверсии ЕГЭ-2027. По этой таблице собирается и валидируется каждый вариант.</div>';
-  h+='<div class="table-scroll"><table class="mtx"><tr><th>№</th><th>Что проверяется</th><th>Тип ответа</th><th>Балл</th></tr>';
+  let h='<div class="task"><div class="task-head"><div class="task-no">Матрица КИМ</div>'+
+    '<span class="chip">часть 1 — '+PART1_MAX+'</span><span class="chip">часть 2 — 22</span>'+
+    '<span class="chip g">итого '+TOTAL_MAX+' первичных</span></div>';
+  h+='<div class="topic">Структура и правила проверки по демоверсии ЕГЭ-2027. По этой таблице собирается и проверяется каждый вариант.</div>';
+  h+='<table class="mtx"><tr><th>№</th><th>Что проверяется</th><th>Тип ответа</th><th>Балл</th></tr>';
   LINES.forEach(l=>{
-    const live=TASKS.some(t=>t.no===l.no);
-    h+='<tr class="'+(live?"live":"")+'"><td>'+l.no+'</td><td>'+esc(l.t)+(live?' <span class="chip g" style="font-size:10px">в демо</span>':'')+
-       '</td><td><span class="tp '+l.type+'">'+typeLabel(l.type)+'</span></td><td><b>'+l.max+'</b></td></tr>';
+    h+='<tr><td>'+l.no+'</td><td>'+esc(l.t)+'</td><td><span class="tp '+l.type+'">'+
+       typeLabel(l.type)+'</span></td><td><b>'+l.max+'</b></td></tr>';
   });
-  h+='</table></div>';
-  h+='<div class="note" style="background:var(--blue-soft);color:var(--ink)"><b>Правила проверки, зашитые в валидатор.</b><br>'+
-     '· Задания 1–7, 9–21, 23–26 — 1 балл, только полное совпадение с эталоном.<br>'+
-     '· Задания 8 и 22 — 2 балла; 1 балл, если неверны одна или две позиции; порядок символов важен.<br>'+
-     '· В заданиях 2–4, 9–21, 23, 24, 26 порядок записи символов значения не имеет.<br>'+
-     '· Если символов в ответе больше, чем в эталоне, — 0 баллов независимо от содержания.<br>'+
-     '· Сочинение меньше 150 слов — 0 по всем критериям.</div>';
+  h+='</table><div class="note" style="background:var(--blue-soft);color:var(--ink)"><b>Правила проверки, зашитые в валидатор.</b><br>'+
+   '· Задания 1–7, 9–21, 23–26 — 1 балл, только полное совпадение с эталоном.<br>'+
+   '· Задания 8 и 22 — 2 балла; 1 балл, если неверны одна или две позиции; порядок символов важен.<br>'+
+   '· В заданиях 2–4, 9–21, 23, 24, 26 порядок записи символов значения не имеет.<br>'+
+   '· Если символов в ответе больше, чем в эталоне, — 0 баллов независимо от содержания.<br>'+
+   '· Сочинение меньше 150 слов — 0 по всем критериям.</div>';
   h+='<div class="actions"><button class="btn btn-pri" id="backTask">К заданиям</button></div></div>';
   $("#task").innerHTML=h;
   $("#backTask").onclick=()=>{state.view="task";render();};
@@ -542,9 +565,10 @@ function renderMatrix(){
 }
 
 /* ---------- обработчики ---------- */
-function wire(t,drilling){
+function wire(t){
   const ans=$("#ans");
-  if(ans) ans.oninput=e=>{state.answers[t.no]=e.target.value;renderNums();};
+  if(ans)ans.oninput=e=>{state.answers[t.no]=e.target.value;renderNums();};
+
   document.querySelectorAll("[data-mi]").forEach(el=>{
     el.oninput=e=>{
       const arr=state.answers[t.no]||new Array(t.left.length).fill("");
@@ -567,23 +591,20 @@ function wire(t,drilling){
       const k=el.dataset.si+"-"+el.dataset.wi;
       state.drill[t.no][k]=!state.drill[t.no][k];
       el.className="gap"+(state.drill[t.no][k]?" set":"");
-      el.setAttribute("aria-pressed",String(state.drill[t.no][k]));
     };
   });
-  const chk=$("#check");if(chk) chk.onclick=()=>{state.checked[t.no]=true;checkDrill(t);};
+  const chk=$("#check");if(chk)chk.onclick=()=>{state.checked[t.no]=true;checkDrill(t);};
+
   const es=$("#essay");
-  if(es) es.oninput=e=>{
+  if(es)es.oninput=e=>{
     state.essay=e.target.value;
-    const words=wordCount(state.essay);
-    $("#wordCount").textContent=words;
-    $("#wordCount").classList.toggle("ok",words>=150);
-    $("#wordLabel").textContent=plural(words,"слово","слова","слов");
-    $("#essayAlarm").hidden=words===0||words>=150;
-    $("#vt").disabled=words<20;
+    const w=wordCount(state.essay);
+    const b=document.querySelector(".wc b");if(b){b.textContent=w;b.classList.toggle("ok",w>=150);}
+    const btn=$("#vt");if(btn)btn.disabled=w<20;
     renderNums();
   };
-  const vt=$("#vt");if(vt) vt.onclick=runVirtualTeacher;
-  const be=$("#backEdit");if(be) be.onclick=e=>{e.preventDefault();state.marks=null;render();};
+  const vt=$("#vt");if(vt)vt.onclick=runVirtualTeacher;
+  const be=$("#backEdit");if(be)be.onclick=e=>{e.preventDefault();state.marks=null;render();};
   document.querySelectorAll("[data-go]").forEach(el=>{
     el.onclick=()=>{
       document.querySelectorAll(".sent").forEach(s=>s.classList.remove("sel"));
@@ -595,7 +616,7 @@ function wire(t,drilling){
 
 function checkDrill(t){
   const L=line(t.no);
-  if(state.mode!=="drill") return;
+  if(state.mode!=="drill")return;
   if(t.drill&&t.drill.kind==="letters"){
     let bad=0;
     document.querySelectorAll("[data-ri]").forEach(el=>{
@@ -604,25 +625,28 @@ function checkDrill(t){
       el.classList.toggle("ok",ok);el.classList.toggle("bad",!ok);
       if(!ok){bad++;el.title="правильно: "+right;}
     });
-    return showVerdict(t,bad===0?"good":"bad",bad===0?"Все позиции верны":bad+" "+plural(bad,"ошибка","ошибки","ошибок")+" в позициях");
+    return showVerdict(t,bad===0?"good":"bad",
+      bad===0?"Все позиции верны":bad+" "+plural(bad,"ошибка","ошибки","ошибок")+" в позициях");
   }
   if(t.drill&&t.drill.kind==="commas"){
     let bad=0;
     t.drill.sentences.forEach((s,si)=>{
       s.words.forEach((w,wi)=>{
-        if(wi>=s.words.length-1) return;
+        if(wi>=s.words.length-1)return;
         const el=document.querySelector('.gap[data-si="'+si+'"][data-wi="'+wi+'"]');
-        const should=s.commas.includes(wi), put=!!((state.drill[t.no]||{})[si+"-"+wi]);
+        const should=s.commas.includes(wi),put=!!((state.drill[t.no]||{})[si+"-"+wi]);
         el.className="gap";
-        if(should&&put) el.classList.add("ok");
+        if(should&&put)el.classList.add("ok");
         else if(should){el.classList.add("miss");bad++;}
         else if(put){el.classList.add("extra");bad++;}
       });
     });
-    return showVerdict(t,bad===0?"good":"bad",bad===0?"Все запятые на месте":"Красным отмечены пропущенные и лишние запятые");
+    return showVerdict(t,bad===0?"good":"bad",
+      bad===0?"Все запятые на месте":"Красным отмечены пропущенные и лишние запятые");
   }
   const p=scoreOf(t);
-  showVerdict(t,p===L.max?"good":(p>0?"part":"bad"),"Ваш балл: "+p+" из "+L.max+". Эталон: "+t.key.join(" или "));
+  showVerdict(t,p===L.max?"good":(p>0?"part":"bad"),
+    "Ваш балл: "+p+" из "+L.max+". Эталон: "+t.key.join(" или "));
 }
 function showVerdict(t,cls,msg){
   const v=$("#verdict");if(!v)return;
@@ -631,15 +655,14 @@ function showVerdict(t,cls,msg){
     '<div class="exp">'+esc(t.exp||"")+'</div>';
 }
 
-/* ---------- ИИ-проверка (демо-разметка) ---------- */
+/* ---------- Виртуальный учитель (демо-разметка) ---------- */
 function runVirtualTeacher(){
   const sentences=state.essay.trim().split(/(?<=[.!?…])\s+/).filter(Boolean);
-  if(wordCount(state.essay)<150){
-    state.marks={sentences,items:[],scores:Object.fromEntries(CRITERIA.filter(c=>c.auto).map(c=>[c.c,0])),payload:{scoring:"Меньше 150 слов: 0 по всем критериям. ИИ не вызывается."}};
-    render();
-    return;
+  const n=sentences.length,items=[];
+  if (wordCount(state.essay) < 150) {
+    state.marks={sentences,items:[],scores:{"К1":0,"К2":0,"К3":0,"К4":0,"К5":0,"К6":0},payload:{reason:"Меньше 150 слов"}};
+    render(); return;
   }
-  const n=sentences.length, items=[];
   const push=(s,crit,level,text)=>{if(s>=0&&s<n)items.push({s,crit,level,text});};
   push(0,"К1","ok","Позиция автора по заявленной проблеме сформулирована.");
   push(1,"К2","ok","Первый пример-иллюстрация опирается на исходный текст.");
@@ -651,10 +674,11 @@ function runVirtualTeacher(){
     sentences,items,
     scores:{"К1":1,"К2":1,"К3":2,"К4":1,"К5":1,"К6":1},
     payload:{
-      request:{task:27,problem:TASKS.find(t=>t.no===27).problem,
+      request:{task:27,problem:task(27).problem,
         sentences:sentences.map((s,i)=>({i,text:s.slice(0,44)+(s.length>44?"…":"")}))},
       response:{marks:items.map(m=>({sentence:m.s,criterion:m.crit,verdict:m.level,note:m.text}))},
-      scoring:"Это пример разметки и обмена с ИИ. Реальная модель и сервер пока не подключены. К7–К10 оценивает репетитор."
+      scoring:"Модель возвращает номера предложений и разметку элементов. Границы предложений, "+
+              "подсчёт слов и итоговый балл по К1–К6 считает сервер. К7–К10 сервер не считает."
     }
   };
   render();
@@ -662,54 +686,64 @@ function runVirtualTeacher(){
 
 /* ---------- итог ---------- */
 $("#finish").onclick=()=>{
-  let got=0,shown=0,rows="";
+  let got=0,rows="";
   TASKS.forEach(t=>{
     const L=line(t.no);
     if(L.type==="essay"){
-      rows+='<div class="rep-row part"><span class="rn">27</span><span class="rt">сочинение — проверяется отдельно</span><span class="rp">—</span></div>';
+      rows+='<div class="rep-row part"><span class="rn">27</span>'+
+            '<span class="rt">сочинение — проверяется отдельно</span><span class="rp">—</span></div>';
       return;
     }
-    const p=scoreOf(t);got+=p;shown+=L.max;
+    const p=scoreOf(t);got+=p;
     const cls=p===L.max?"ok":(p>0?"part":"no");
-    rows+='<div class="rep-row '+cls+'"><span class="rn">'+t.no+'</span><span class="rt">'+esc(L.t)+'</span><span class="rp">'+p+'/'+L.max+'</span></div>';
+    rows+='<div class="rep-row '+cls+'"><span class="rn">'+t.no+'</span><span class="rt">'+
+          esc(L.t)+'</span><span class="rp">'+p+'/'+L.max+'</span></div>';
   });
-  $("#repCap").textContent="Результат демо-варианта (заполнено 8 позиций из 27)";
-  $("#scoreBig").textContent=got+" / "+shown+" первичных";
-  $("#repList").innerHTML=rows+'<div style="margin-top:14px;font-size:13px;color:var(--muted)">Полный вариант: часть 1 — '+PART1_MAX+' баллов, часть 2 — 22, итого '+TOTAL_MAX+'.</div>';
+  $("#repCap").textContent=V.title+" — результат части 1";
+  $("#scoreBig").textContent=got+" / "+PART1_MAX+" первичных";
+  $("#repList").innerHTML=rows+'<div style="margin-top:14px;font-size:13px;color:var(--muted)">'+
+    'С сочинением вариант даёт '+TOTAL_MAX+' первичных баллов.</div>';
   $("#overlay").classList.add("show");
 };
 $("#closeRep").onclick=()=>$("#overlay").classList.remove("show");
 $("#overlay").onclick=e=>{if(e.target===$("#overlay"))$("#overlay").classList.remove("show")};
+
+/* ---------- сдать работу преподавателю ---------- */
+$("#submitWork").onclick=()=>{
+  const activeStudent=DB.currentStudent();
+  if(!activeStudent || !ME || activeStudent.id!==ME.id || activeStudent.subject!=="rus" || activeStudent.status!=="paid"){
+    alert("Чтобы сдать работу преподавателю, войдите в кабинет ученика по коду доступа.");
+    location.href="student.html";
+    return;
+  }
+  const part1=TASKS.filter(t=>line(t.no).type!=="essay").map(t=>{
+    const a=state.answers[t.no];
+    return {no:t.no,topic:line(t.no).t,max:line(t.no).max,
+      answer:Array.isArray(a)?a.join(""):(a||""),key:t.key[0],score:scoreOf(t),
+      stem:t.stem,opts:t.opts||[],match:t.match||null,exp:t.exp||"",
+      source:t.text&&V.texts[t.text]?V.texts[t.text].sentences.join(" "):""};
+  });
+  const e27=task(27);
+  if(!state.essay||!state.essay.trim()){
+    if(!confirm("Сочинение не написано — преподавателю будет нечего проверять. Всё равно сдать работу?"))return;
+  }
+  if(state.essay.trim() && !state.marks) runVirtualTeacher();
+  const submitted=DB.submit(ME.id,"rus",{
+    variant:V.title,part1,essay:state.essay,problem:e27.problem,
+    marks:state.marks?{items:state.marks.items,scores:state.marks.scores}:null
+  });
+  if(!submitted){ alert("Доступ к этому предмету не найден."); return; }
+  draftSubmitted=true;
+  try{localStorage.removeItem(draftKey);}catch(e){}
+  location.href="student.html";
+};
+
 $("#showMatrix").onclick=()=>{state.view="matrix";render();};
 $("#prev").onclick=()=>{if(state.i>0){state.i--;render();}};
 $("#next").onclick=()=>{if(state.i<TASKS.length-1){state.i++;render();}};
 $("#mExam").onclick=()=>{state.mode="exam";$("#mExam").classList.add("on");$("#mDrill").classList.remove("on");state.view="task";render();};
 $("#mDrill").onclick=()=>{state.mode="drill";$("#mDrill").classList.add("on");$("#mExam").classList.remove("on");state.view="task";render();};
-/* ---------- сдать работу в кабинет репетитора ---------- */
-$("#submitWork").onclick=()=>{
-  const part1=TASKS.filter(t=>line(t.no).type!=="essay").map(t=>{
-    const a=state.answers[t.no];
-    return {no:t.no,topic:line(t.no).t,max:line(t.no).max,
-      answer:Array.isArray(a)?a.join(""):(a||""),key:t.key[0],score:scoreOf(t),
-      task:t,practice:state.drill[t.no]||null};
-  });
-  const work={
-    id:"work-"+Date.now()+"-"+Math.random().toString(36).slice(2),
-    student:"Ученик (демо)",variant:"Демо-вариант 1 · русский язык",
-    part1,bankVersion:TASK_BANK_VERSION,source:TEXT,essayTask:TASKS.find(t=>t.no===27),
-    essay:state.essay,problem:TASKS.find(t=>t.no===27).problem,
-    marks:state.marks?{items:state.marks.items,scores:state.marks.scores}:null
-  };
-  if(!work.essay||!work.essay.trim()){
-    if(!confirm("Сочинение не написано — репетитору будет нечего проверять. Всё равно сдать работу?")) return;
-  }
-  const packed=btoa(unescape(encodeURIComponent(JSON.stringify(work))));
-  try{localStorage.setItem("rus_work_last",JSON.stringify(work));}catch(e){}
-  window.open("teacher.html#w="+encodeURIComponent(packed),"_blank");
-};
 
-function plural(n,a,b,c){const m=n%100;if(m>=11&&m<=14)return c;const l=n%10;return l===1?a:(l>=2&&l<=4?b:c);}
-if(location.hash==="#essay") state.i=TASKS.findIndex(t=>t.no===27);
 render();
 </script>
 </body>

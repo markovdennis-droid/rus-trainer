@@ -1,0 +1,391 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Кабинет ученика · Тренажёр ЕГЭ</title>
+<style>
+:root{
+  --bg:#f3f6fc;--card:#fff;--ink:#17203a;--muted:#687391;--line:#e4e9f4;
+  --blue:#2f6bed;--blue-soft:#e9f0ff;--green:#17a673;--green-soft:#e3f7ef;
+  --orange:#f08a24;--orange-soft:#fff2e2;--red:#e2574c;--red-soft:#fdeceb;
+  --r:18px;--sh:0 2px 4px rgba(23,32,58,.04),0 10px 28px rgba(23,32,58,.07);
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);
+  font:16px/1.55 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif;-webkit-font-smoothing:antialiased}
+button{font:inherit;cursor:pointer;border:0}
+h1,h2,h3{margin:0;letter-spacing:-.02em}
+a{color:inherit}
+
+header{position:sticky;top:0;z-index:30;background:rgba(243,246,252,.93);backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+.nav{max-width:1080px;margin:0 auto;padding:12px 20px;display:flex;align-items:center;gap:14px}
+.logo{display:flex;align-items:center;gap:10px;font-weight:800;text-decoration:none;color:inherit}
+.cube{width:32px;height:32px;border-radius:11px;background:linear-gradient(150deg,#5b8dff,var(--blue));
+  box-shadow:inset 0 -3px 6px rgba(0,0,0,.16),0 6px 14px rgba(47,107,237,.3);display:grid;place-items:center;color:#fff}
+.who{margin-left:auto;display:flex;align-items:center;gap:10px;font-size:14px;color:var(--muted)}
+.ava{width:32px;height:32px;border-radius:50%;background:linear-gradient(150deg,#8fb0ff,var(--blue));
+  display:grid;place-items:center;color:#fff;font-weight:700;font-size:13px}
+.exit{background:none;color:var(--muted);font-size:13px;text-decoration:underline;padding:0}
+
+.wrap{max-width:1080px;margin:0 auto;padding:22px 20px 70px;display:grid;grid-template-columns:270px 1fr;gap:20px}
+@media(max-width:900px){.wrap{grid-template-columns:1fr;padding:16px 14px 60px}}
+aside{position:sticky;top:72px;align-self:start}
+@media(max-width:900px){aside{position:static}}
+.panel{background:var(--card);border:1px solid var(--line);border-radius:var(--r);box-shadow:var(--sh);padding:18px}
+.panel h3{font-size:12px;text-transform:uppercase;letter-spacing:.06em;color:var(--muted);margin-bottom:12px}
+.code{font-family:ui-monospace,Menlo,monospace;font-size:19px;font-weight:700;letter-spacing:.06em;
+  background:var(--blue-soft);color:var(--blue);border-radius:12px;padding:12px;text-align:center}
+.meta{font-size:13.5px;color:var(--muted);line-height:1.7;margin-top:12px}
+.meta b{color:var(--ink)}
+.tutor{display:flex;align-items:center;gap:10px;margin-top:14px;padding-top:14px;border-top:1px solid var(--line)}
+.tutor .ava2{width:34px;height:34px;border-radius:50%;background:linear-gradient(150deg,#45cf9d,var(--green));
+  display:grid;place-items:center;color:#fff;font-weight:700;font-size:12px;flex:none}
+.tutor span{font-size:13.5px;line-height:1.3}
+.tutor small{display:block;color:var(--muted);font-size:12px}
+
+h1.page{font-size:26px;font-weight:800;margin-bottom:4px}
+p.sub{color:var(--muted);font-size:14.5px;margin:0 0 18px}
+
+.vcard{background:var(--card);border:1px solid var(--line);border-radius:var(--r);box-shadow:var(--sh);
+  padding:18px 20px;margin-bottom:12px;display:flex;align-items:center;gap:14px;flex-wrap:wrap}
+.vcard .main{flex:1;min-width:180px}
+.vcard .main b{display:block;font-size:17px}
+.vcard .main span{font-size:13.5px;color:var(--muted)}
+.btn{border-radius:12px;padding:10px 18px;font-weight:700;font-size:14.5px;text-decoration:none;display:inline-block}
+.btn-pri{background:var(--blue);color:#fff;box-shadow:0 5px 14px rgba(47,107,237,.28)}
+.btn-gh{background:var(--card);color:var(--ink);border:1px solid var(--line)}
+.btn-ok{background:var(--green);color:#fff;box-shadow:0 5px 14px rgba(23,166,115,.28)}
+
+.badge{font-size:12px;font-weight:700;padding:5px 11px;border-radius:999px;white-space:nowrap}
+.badge.wait{background:var(--orange-soft);color:#9a5410}
+.badge.done{background:var(--green-soft);color:var(--green)}
+.sc{font-weight:800;font-size:18px;font-variant-numeric:tabular-nums;min-width:74px;text-align:right}
+.sc small{display:block;font-size:11px;font-weight:600;color:var(--muted)}
+
+.empty{text-align:center;color:var(--muted);padding:34px 20px;font-size:14.5px;
+  background:var(--card);border:1px dashed var(--line);border-radius:var(--r)}
+
+/* просмотр проверенной работы */
+.back{background:none;color:var(--blue);font-weight:600;font-size:14px;padding:0;margin-bottom:14px}
+.work{background:var(--card);border:1px solid var(--line);border-radius:var(--r);box-shadow:var(--sh);padding:24px 26px}
+@media(max-width:900px){.work{padding:18px 15px}}
+.wtop{display:flex;align-items:center;gap:14px;flex-wrap:wrap;padding-bottom:16px;border-bottom:1px solid var(--line);margin-bottom:18px}
+.wtop h2{font-size:21px;font-weight:800}
+.total{margin-left:auto;text-align:right}
+.total b{font-size:26px;font-weight:800}
+.total span{display:block;font-size:12px;color:var(--muted)}
+details.p1{border:1px solid var(--line);border-radius:14px;padding:14px 16px;margin-bottom:20px;background:#fbfcfe}
+details.p1 summary{cursor:pointer;font-weight:700;list-style:none}
+details.p1 summary::-webkit-details-marker{display:none}
+details.p1 summary::after{content:"развернуть";float:right;color:var(--blue);font-weight:600;font-size:13px}
+details.p1[open] summary::after{content:"свернуть"}
+table.ans{width:100%;border-collapse:collapse;font-size:13.5px;margin-top:12px}
+table.ans th{text-align:left;font-size:11px;text-transform:uppercase;letter-spacing:.05em;color:var(--muted);padding:6px 4px;border-bottom:2px solid var(--line)}
+table.ans td{padding:6px 4px;border-bottom:1px solid var(--line)}
+table.ans td.k{font-family:ui-monospace,Menlo,monospace;font-size:13px}
+table.ans td.ok{color:var(--green);font-weight:700}
+table.ans td.no{color:var(--red);font-weight:700}
+
+.grid{display:grid;grid-template-columns:1fr 320px;gap:20px;align-items:start}
+@media(max-width:1000px){.grid{grid-template-columns:1fr}}
+.prob{background:var(--orange-soft);border-radius:12px;padding:12px 14px;font-size:14.5px;margin-bottom:14px}
+.prob span{display:block;font-size:11px;text-transform:uppercase;letter-spacing:.05em;color:#9a5410;margin-bottom:3px}
+#essayBox{border:2px solid var(--line);border-radius:14px;padding:18px;font-family:Georgia,serif;
+  font-size:16.5px;line-height:2.05;background:#fbfcfe;white-space:pre-wrap}
+.seg{border-radius:4px;padding:1px 0}
+.seg.k-ok{background:#d9f3e7;box-shadow:inset 0 -2px 0 var(--green)}
+.seg.k-warn{background:#ffeccf;box-shadow:inset 0 -2px 0 var(--orange)}
+.seg.k-bad{background:#fbdcd9;box-shadow:inset 0 -2px 0 var(--red)}
+.seg.t-mark{background:#ffe9e6;box-shadow:inset 0 -2px 0 var(--red);cursor:pointer}
+.crit-row{display:flex;align-items:center;gap:8px;padding:8px 0;border-bottom:1px solid var(--line);font-size:14px}
+.crit-row:last-child{border:0}
+.crit-row .code2{font-weight:800;min-width:34px}
+.crit-row .nm{flex:1;color:var(--muted);font-size:12.5px;line-height:1.3}
+.crit-row .pt{font-weight:800;font-variant-numeric:tabular-nums}
+.crit-row.auto .code2{color:var(--green)}
+.crit-row.manual .code2{color:var(--blue)}
+.chead{font-size:11px;text-transform:uppercase;letter-spacing:.06em;color:var(--muted);margin:14px 0 2px}
+.sum{display:flex;justify-content:space-between;margin-top:14px;padding-top:12px;border-top:2px solid var(--ink);font-weight:800;font-size:17px}
+.mark-item{display:flex;gap:9px;padding:9px 10px;border-radius:10px;font-size:13.5px;line-height:1.45;cursor:pointer}
+.mark-item:hover{background:#f4f7fd}
+.tag{font-weight:700;font-size:10.5px;padding:2px 7px;border-radius:999px;height:fit-content;white-space:nowrap}
+.tag.ok{background:var(--green-soft);color:var(--green)}
+.tag.warn{background:var(--orange-soft);color:#9a5410}
+.tag.bad{background:var(--red-soft);color:var(--red)}
+.tag.t{background:#ece4fb;color:#6b3fd4}
+.note{font-size:12.5px;color:var(--muted);background:var(--blue-soft);border-radius:10px;padding:10px 12px;margin-top:12px;line-height:1.5}
+
+.gate{max-width:460px;margin:60px auto;background:var(--card);border:1px solid var(--line);
+  border-radius:24px;box-shadow:var(--sh);padding:30px;text-align:center}
+.gate input{width:100%;border:2px solid var(--line);border-radius:14px;padding:12px 14px;font:inherit;
+  text-align:center;letter-spacing:.08em;font-weight:700;margin:16px 0 4px;background:var(--card);color:var(--ink)}
+.gate input:focus{outline:0;border-color:var(--blue)}
+.gate .err{color:var(--red);font-size:13px;min-height:18px;margin-bottom:10px}
+
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    --bg:#0f1426;--card:#19203a;--ink:#e9edf8;--muted:#8d99b9;--line:#283151;
+    --blue-soft:#1d2950;--green-soft:#143529;--orange-soft:#392813;--red-soft:#391e1d;
+    --sh:0 2px 4px rgba(0,0,0,.2),0 10px 28px rgba(0,0,0,.3);
+  }
+  :root:not([data-theme="light"]) header{background:rgba(15,20,38,.93)}
+  :root:not([data-theme="light"]) #essayBox,:root:not([data-theme="light"]) details.p1{background:#141a30}
+  :root:not([data-theme="light"]) .seg.k-ok{background:#1b4a38}
+  :root:not([data-theme="light"]) .seg.k-warn{background:#4a3817}
+  :root:not([data-theme="light"]) .seg.t-mark{background:#4d2422}
+}
+</style>
+</head>
+<body>
+<div style="padding:9px 20px;background:#fff0d6;color:#624312;font:14px/1.5 system-ui;text-align:center">Демо для обсуждения · оплата и ИИ имитируются · данные только в этом браузере · <a href="guide.html" style="color:inherit">Как показать</a></div>
+
+<header>
+  <div class="nav">
+    <a class="logo" href="index.html"><span class="cube">Р</span> Кабинет ученика</a>
+    <div class="who" id="who"></div>
+  </div>
+</header>
+
+<div id="root"></div>
+
+<script src="bank/db.js"></script>
+<script>
+var $ = function (s) { return document.querySelector(s); };
+var esc = function (s) { return String(s).replace(/[&<>"]/g, function (c) {
+  return ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" })[c]; }); };
+var ini = function (n) { return n.split(" ").map(function (p) { return p[0]; }).join("").slice(0, 2); };
+
+var CRIT = [
+  { c: "К1",  n: "Отражение позиции автора",      max: 1, auto: true,  grp: "Содержание" },
+  { c: "К2",  n: "Комментарий к позиции автора",  max: 3, auto: true,  grp: "Содержание" },
+  { c: "К3",  n: "Своё отношение и обоснование",  max: 2, auto: true,  grp: "Содержание" },
+  { c: "К4",  n: "Фактическая точность речи",     max: 1, auto: true,  grp: "Речевое оформление" },
+  { c: "К5",  n: "Логичность речи",               max: 2, auto: true,  grp: "Речевое оформление" },
+  { c: "К6",  n: "Соблюдение этических норм",     max: 1, auto: true,  grp: "Речевое оформление" },
+  { c: "К7",  n: "Орфография",                    max: 3, auto: false, grp: "Грамотность" },
+  { c: "К8",  n: "Пунктуация",                    max: 3, auto: false, grp: "Грамотность" },
+  { c: "К9",  n: "Грамматические нормы",          max: 3, auto: false, grp: "Грамотность" },
+  { c: "К10", n: "Речевые нормы",                 max: 3, auto: false, grp: "Грамотность" }
+];
+
+var me = DB.currentStudent();
+var open = null;
+
+/* ---------- вход по коду, если сессии нет ---------- */
+function renderGate(msg) {
+  $("#who").innerHTML = "";
+  $("#root").innerHTML =
+    '<div class="gate"><h1 class="page">Вход в кабинет</h1>' +
+    '<p class="sub">Введите код доступа, который пришёл после оплаты.</p>' +
+    '<input id="codeIn" placeholder="RUS-0000" autocomplete="off">' +
+    '<div class="err">' + (msg || "") + '</div>' +
+    '<button class="btn btn-pri" style="width:100%" id="go">Войти</button>' +
+    '<p class="sub" style="margin-top:16px">Нет доступа? Попросите у преподавателя ссылку-приглашение ' +
+    'или <a href="join.html?s=rus">купите доступ сами</a>.</p></div>';
+  $("#go").onclick = function () {
+    var v = $("#codeIn").value.trim().toUpperCase();
+    var found = DB.all().students.filter(function (s) { return s.code === v; })[0];
+    if (!found) return renderGate("Код не найден. Проверьте раскладку и дефис.");
+    DB.signIn("student", found.id);
+    me = found;
+    render();
+  };
+  $("#codeIn").onkeydown = function (e) { if (e.key === "Enter") $("#go").click(); };
+}
+
+/* ---------- подсчёты ---------- */
+function p1Score(w) { return (w.part1 || []).reduce(function (s, r) { return s + r.score; }, 0); }
+function p1Max(w)   { return (w.part1 || []).reduce(function (s, r) { return s + r.max; }, 0); }
+function autoScore(w) { return w.marks ? Object.keys(w.marks.scores).reduce(function (s, k) { return s + w.marks.scores[k]; }, 0) : 0; }
+function teacherScore(w) { if(w.status!=="done") return 0; return CRIT.filter(function (c) { return !c.auto; })
+  .reduce(function (s, c) { return s + (w.teacher && w.teacher[c.c] != null ? w.teacher[c.c] : 0); }, 0); }
+function totalScore(w) { return p1Score(w) + autoScore(w) + teacherScore(w); }
+function maxOf(w) { return p1Max(w) + (w.essay ? 22 : 0); }
+
+function sentRanges(text) {
+  var out = [], re = /[^.!?…]+(?:[.!?…]+|$)\s*/g, m;
+  while ((m = re.exec(text)) !== null) out.push({ s: m.index, e: m.index + m[0].replace(/\s+$/, "").length });
+  if (!out.length) out.push({ s: 0, e: text.length });
+  return out;
+}
+
+/* ---------- кабинет ---------- */
+function render() {
+  if (!me) return renderGate();
+  var teacher = me.teacherId ? DB.teacher(me.teacherId) : null;
+  var subject = DB.subject(me.subject);
+
+  $("#who").innerHTML = '<span>' + esc(me.name) + '</span><span class="ava">' + esc(ini(me.name)) + '</span>' +
+    '<button class="exit" id="exit">выйти</button>';
+
+  var works = DB.submissionsOf(me.id);
+  var h = '<div class="wrap"><aside><div class="panel"><h3>Доступ</h3>' +
+    '<div class="code">' + esc(me.code || "—") + '</div>' +
+    '<div class="meta"><b>' + esc(subject.title) + '</b><br>действует до экзамена<br>' +
+    'демо: данные в этом браузере</div>';
+  if (teacher) {
+    h += '<div class="tutor"><span class="ava2">' + esc(ini(teacher.name)) + '</span>' +
+         '<span>' + esc(teacher.name) + '<small>ваш преподаватель</small></span></div>';
+  } else {
+    h += '<div class="note" style="margin-top:14px">Преподаватель не назначен. Сочинения проверять некому — ' +
+         'это отдельная платная опция.</div>';
+  }
+  h += '</div></aside><main id="main"></main></div>';
+  $("#root").innerHTML = h;
+  $("#exit").onclick = function () { DB.signOut("student"); me = null; render(); };
+
+  if (open) renderWork(); else renderList(works, subject);
+}
+
+function renderList(works, subject) {
+  var h = '<h1 class="page">Здравствуйте, ' + esc(me.name.split(" ")[0]) + '</h1>' +
+          '<p class="sub">' + esc(subject.title) + ' · формат ЕГЭ-2027</p>';
+
+  h += '<div class="vcard"><span class="main"><b>Вариант 1</b>' +
+       '<span>27 заданий · 50 первичных баллов · 210 минут</span></span>' +
+       '<a class="btn btn-pri" href="trainer.html">Решать</a></div>';
+
+  h += '<h3 style="margin:26px 0 10px;font-size:13px;text-transform:uppercase;letter-spacing:.06em;color:var(--muted)">Мои работы</h3>';
+  if (!works.length) {
+    h += '<div class="empty">Вы ещё не сдавали работ.<br>Решите вариант и нажмите «Сдать работу» — ' +
+         'она придёт преподавателю на проверку.</div>';
+  } else {
+    works.forEach(function (w) {
+      var done = w.status === "done";
+      h += '<div class="vcard" data-w="' + w.id + '" style="cursor:pointer">' +
+        '<span class="main"><b>' + esc(w.variant) + '</b><span>' + esc(w.date) + '</span></span>' +
+        '<span class="badge ' + (done ? "done" : "wait") + '">' +
+          (done ? "проверено" : (w.status === "saved" ? "сохранено" : "у преподавателя")) + '</span>' +
+        '<span class="sc">' + totalScore(w) + '<small>из ' + maxOf(w) + '</small></span></div>';
+    });
+  }
+  $("#main").innerHTML = h;
+  document.querySelectorAll("[data-w]").forEach(function (el) {
+    el.onclick = function () { open = DB.submission(el.dataset.w); render(); };
+  });
+}
+
+function renderWork() {
+  var w = open, max = maxOf(w), teacher = me.teacherId ? DB.teacher(me.teacherId) : null;
+  var h = '<button class="back" id="back">← Ко всем работам</button><div class="work">';
+  h += '<div class="wtop"><div><h2>' + esc(w.variant) + '</h2>' +
+       '<div style="font-size:13.5px;color:var(--muted)">' + esc(w.date) +
+       (w.status === "done" && teacher ? ' · проверил(а) ' + esc(teacher.name) : '') + '</div></div>';
+  h += '<div class="total"><b>' + totalScore(w) + ' / ' + max + '</b><span>первичных баллов</span></div></div>';
+
+  var wrong = (w.part1 || []).filter(function (r) { return r.score < r.max; });
+  h += '<details class="p1"><summary>Часть 1 — ' + p1Score(w) + ' из ' + p1Max(w) +
+       (wrong.length ? ' · ошибок: ' + wrong.length : ' · без ошибок') + '</summary>' +
+       '<table class="ans"><tr><th>№</th><th>Что проверялось</th><th>Ваш ответ</th><th>Верный</th><th>Балл</th></tr>';
+  (w.part1 || []).forEach(function (r) {
+    var ok = r.score === r.max;
+    h += '<tr><td><b>' + r.no + '</b></td><td>' + esc(r.topic) + '</td><td class="k">' + esc(r.answer || "—") +
+         '</td><td class="k" style="color:var(--muted)">' + esc(r.key) + '</td>' +
+         '<td class="' + (ok ? "ok" : "no") + '">' + r.score + '/' + r.max + '</td></tr>';
+  });
+  h += '</table>';
+  (w.part1 || []).forEach(function (r) {
+    if (!r.stem) return;
+    h += '<details style="margin:12px 0"><summary>№' + r.no + ' · ' + esc(r.topic) + '</summary>' +
+      (r.source ? '<p style="white-space:pre-wrap">' + esc(r.source) + '</p>' : '') +
+      '<p>' + esc(r.stem) + '</p>';
+    (r.opts || []).forEach(function (opt, i) { h += '<p>' + (i+1) + ') ' + esc(opt) + '</p>'; });
+    if (r.match) h += '<pre style="white-space:pre-wrap">' + esc(JSON.stringify(r.match, null, 2)) + '</pre>';
+    h += '<p>Ответ: ' + esc(r.answer || '—') + ' · Эталон: ' + esc(r.key) + '</p><p>' + esc(r.exp) + '</p></details>';
+  });
+  h += '</details>';
+
+  if (!w.essay) {
+    h += '<div class="empty">Сочинение в этой работе не писали.</div></div>';
+    $("#main").innerHTML = h; $("#back").onclick = function () { open = null; render(); }; return;
+  }
+
+  if (w.status !== "done") {
+    h += '<div class="note" style="background:var(--orange-soft);color:#8a5212;font-size:14px">' +
+      (teacher ? '<b>Сочинение ещё проверяется.</b> В демо разбор содержания подставлен, баллы за грамотность поставит преподаватель.' :
+      '<b>Работа сохранена.</b> Для проверки сочинения нужен преподаватель; платная проверка в демо не подключена.') + '</div>';
+  }
+
+  h += '<div class="grid" style="margin-top:18px"><div>';
+  h += '<div class="prob"><span>Проблема</span>' + esc(w.problem || "") + '</div>';
+  h += '<div id="essayBox"></div></div>';
+
+  h += '<div><div class="panel"><h3>Ваши баллы за сочинение</h3>';
+  var grp = "";
+  CRIT.forEach(function (c) {
+    if (c.grp !== grp) { grp = c.grp; h += '<div class="chead">' + grp + '</div>'; }
+    var val = c.auto
+      ? (w.marks ? w.marks.scores[c.c] : 0)
+      : (w.status === "done" && w.teacher && w.teacher[c.c] != null ? w.teacher[c.c] : null);
+    h += '<div class="crit-row ' + (c.auto ? "auto" : "manual") + '"><span class="code2">' + c.c + '</span>' +
+         '<span class="nm">' + c.n + '</span><span class="pt">' +
+         (val != null ? val : "—") + '/' + c.max + '</span></div>';
+  });
+  h += '<div class="sum"><span>Сочинение</span><span>' + (autoScore(w) + teacherScore(w)) + ' / 22</span></div>';
+  h += '<div class="note">Зелёным отмечено то, что засчитала машина, синим — баллы преподавателя.</div></div>';
+
+  var notes = w.status === "done" ? (w.notes || []) : [];
+  h += '<div class="panel" style="margin-top:14px"><h3>Замечания</h3>';
+  (w.marks ? w.marks.items : []).forEach(function (m) {
+    h += '<div class="mark-item" data-go="m' + m.s + '"><span class="tag ' + m.level + '">' + m.crit + '</span>' +
+         '<span>' + esc(m.text) + '</span></div>';
+  });
+  notes.forEach(function (n, i) {
+    h += '<div class="mark-item" data-go="t' + i + '"><span class="tag t">' + esc(n.crit) + '</span>' +
+         '<span>' + esc(n.text) + '</span></div>';
+  });
+  if (!notes.length && w.status === "done") {
+    h += '<div style="font-size:12.5px;color:var(--muted);padding:6px 2px">Преподаватель не оставил замечаний в тексте.</div>';
+  }
+  h += '</div></div></div></div>';
+
+  $("#main").innerHTML = h;
+  paintEssay();
+  $("#back").onclick = function () { open = null; render(); };
+  document.querySelectorAll("[data-go]").forEach(function (el) {
+    el.onclick = function () {
+      var t = document.querySelector('.seg[data-id="' + el.dataset.go + '"]');
+      if (t) {
+        t.scrollIntoView({ block: "center", behavior: "smooth" });
+        t.style.outline = "2px solid var(--blue)";
+        setTimeout(function () { t.style.outline = ""; }, 1400);
+      }
+    };
+  });
+}
+
+function paintEssay() {
+  var w = open, text = w.essay, box = $("#essayBox");
+  var sents = sentRanges(text), ranges = [];
+  (w.marks ? w.marks.items : []).forEach(function (m) {
+    var r = sents[m.s]; if (!r) return;
+    ranges.push({ s: r.s, e: r.e, cls: "k-" + m.level, id: "m" + m.s });
+  });
+  (w.status === "done" ? (w.notes || []) : []).forEach(function (n, i) { ranges.push({ s: n.s, e: n.e, cls: "t-mark", id: "t" + i }); });
+
+  var pts = {}; pts[0] = 1; pts[text.length] = 1;
+  ranges.forEach(function (r) { pts[r.s] = 1; pts[r.e] = 1; });
+  var arr = Object.keys(pts).map(Number).sort(function (a, b) { return a - b; });
+  var out = "";
+  for (var i = 0; i < arr.length - 1; i++) {
+    var s = arr[i], e = arr[i + 1];
+    var act = ranges.filter(function (r) { return r.s <= s && r.e >= e; });
+    var chunk = esc(text.slice(s, e));
+    out += act.length
+      ? '<span class="seg ' + act.map(function (a) { return a.cls; }).join(" ") +
+        '" data-id="' + act[act.length - 1].id + '">' + chunk + '</span>'
+      : chunk;
+  }
+  box.innerHTML = out;
+}
+
+window.addEventListener("demo-db-change", function () {
+  me = DB.currentStudent();
+  if (open) open = DB.submission(open.id);
+  render();
+});
+render();
+</script>
+</body>
+</html>
